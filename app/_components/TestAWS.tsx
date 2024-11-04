@@ -15,15 +15,6 @@ import { Upload } from '@aws-sdk/lib-storage'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
 
-const s3Client = new S3Client({
-  region: 'auto',
-  endpoint: process.env.NEXT_PUBLIC_R2_ENDPOINT!,
-  credentials: {
-    accessKeyId: process.env.NEXT_PUBLIC_R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.NEXT_PUBLIC_R2_SECRET_ACCESS_KEY!,
-  },
-})
-
 type TempCredentials = {
   accessKeyId: string
   secretAccessKey: string
@@ -33,34 +24,14 @@ type TempCredentials = {
 const generateS3Client = (credentials: TempCredentials) =>
   new S3Client({
     region: 'auto',
-    endpoint: process.env.NEXT_PUBLIC_R2_ENDPOINT!,
+    endpoint: process.env.NEXT_PUBLIC_CLOUDFLARE_R2_ENDPOINT!,
     credentials: {
       accessKeyId: credentials.accessKeyId,
       secretAccessKey: credentials.secretAccessKey,
+      sessionToken: credentials.sessionToken,
     },
+    forcePathStyle: true,
   })
-
-async function uploadFileToR2(
-  bucketName: string,
-  fileKey: string,
-  fileBuffer: Buffer,
-  contentType: string,
-) {
-  try {
-    const command = new PutObjectCommand({
-      Bucket: bucketName,
-      Key: fileKey,
-      Body: fileBuffer,
-      ContentType: contentType,
-    })
-
-    const response = await s3Client.send(command)
-    return response
-  } catch (error) {
-    console.error('上传文件失败:', error)
-    throw error
-  }
-}
 
 async function uploadFileToR2InClient(
   client: S3Client,
@@ -90,43 +61,6 @@ export default function TestAWS() {
   const [progress, setProgress] = useState(0)
   const prefix = 'images/'
   const fileKey = `${prefix}${getCurrentDateTag()}-${nanoid(10)}.${file?.name.split('.').pop()}`
-  const handleUpload = async () => {
-    if (!file) return
-    console.log(file)
-    const buffer = await file.arrayBuffer()
-    const response = await uploadFileToR2(
-      'pandora',
-      fileKey,
-      Buffer.from(buffer),
-      file.type || 'application/octet-stream',
-    )
-    console.log(response)
-  }
-
-  const handleMultipartUpload = async () => {
-    if (!file) return
-    console.log(file)
-    try {
-      const buffer = await file.arrayBuffer()
-      const upload = new Upload({
-        client: s3Client,
-        params: {
-          Bucket: 'pandora',
-          Key: fileKey,
-          Body: Buffer.from(buffer),
-        },
-      })
-      upload.on('httpUploadProgress', (progress) => {
-        console.log(progress)
-        if (!progress.loaded || !progress.total) return
-        setProgress((progress.loaded / progress.total) * 100)
-      })
-
-      await upload.done()
-    } catch (error) {
-      console.error('上传文件失败:', error)
-    }
-  }
 
   const tempCredentialsUpload = async () => {
     if (!file) return
@@ -225,8 +159,6 @@ export default function TestAWS() {
   return (
     <div>
       <Input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-      <Button onClick={handleUpload}>上传</Button>
-      <Button onClick={handleMultipartUpload}>分段上传</Button>
       <Button onClick={tempCredentialsUpload}>临时凭证上传</Button>
       <Button onClick={tempCredentialsMultipartUpload}>临时凭证分段上传</Button>
       <Button onClick={() => cleanupIncompleteUploads('pandora')}>清理未完成的上传</Button>
