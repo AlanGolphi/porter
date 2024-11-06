@@ -4,9 +4,9 @@
   "private": true,
   "description": "Porter is for uploading and sharing files.",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 8080",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "next lint",
     "preinstall": "npx only-allow npm"
   },
