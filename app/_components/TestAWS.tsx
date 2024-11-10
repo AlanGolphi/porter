@@ -51,9 +51,14 @@ async function uploadFileToR2InClient(
     const response = await client.send(command)
     return response
   } catch (error) {
-    console.error('上传文件失败:', error)
+    console.error('Failed to upload file:', error)
     throw error
   }
+}
+
+const calculateRequiredTTL = (fileSize: number): number => {
+  const estimatedSeconds = Math.ceil(fileSize / (1024 * 1024)) + 30
+  return Math.min(Math.max(estimatedSeconds, 900), 3600)
 }
 
 export default function TestAWS() {
@@ -65,6 +70,7 @@ export default function TestAWS() {
   const tempCredentialsUpload = async () => {
     if (!file) return
     console.log(file)
+    console.time('tempCredentialsUpload')
     const buffer = await file.arrayBuffer()
     const response = await getTempAccessCredentials({ prefix, objectKey: fileKey, ttl: 3600 })
     console.log(response)
@@ -77,20 +83,24 @@ export default function TestAWS() {
       file.type || 'application/octet-stream',
     )
     console.log(result)
+    console.timeEnd('tempCredentialsUpload')
   }
 
   const tempCredentialsMultipartUpload = async () => {
     if (!file) {
-      console.error('未选择文件')
+      console.error('No file selected')
       return
     }
 
     try {
-      // 获取临时凭证
-      const response = await getTempAccessCredentials({ ttl: 3600 })
+      // Calculate required TTL based on file size
+      const requiredTTL = calculateRequiredTTL(file.size)
+      
+      // Get temporary credentials
+      const response = await getTempAccessCredentials({ ttl: requiredTTL })
       console.log(response)
       if (!response?.result) {
-        throw new Error('获取临时凭证失败')
+        throw new Error('Failed to get temporary credentials')
       }
 
       const buffer = await file.arrayBuffer()
@@ -106,7 +116,7 @@ export default function TestAWS() {
         },
       })
 
-      // 监听上传进度
+      // Listen for upload progress
       upload.on('httpUploadProgress', (progress) => {
         if (progress.loaded && progress.total) {
           const percentProgress = (progress.loaded / progress.total) * 100
@@ -115,9 +125,9 @@ export default function TestAWS() {
       })
 
       await upload.done()
-      console.log('文件上传成功')
+      console.log('File uploaded successfully')
     } catch (error) {
-      console.error('上传文件失败:', error)
+      console.error('Failed to upload file:', error)
       setProgress(0)
       throw error
     }
@@ -128,14 +138,14 @@ export default function TestAWS() {
     const s3Client = generateS3Client(response.result)
 
     try {
-      // 列出所有未完成的分片上传
+      // List all incomplete multipart uploads
       const listCommand = new ListMultipartUploadsCommand({
         Bucket: bucketName,
       })
 
       const { Uploads } = await s3Client.send(listCommand)
 
-      // 如果存在未完成的上传,则逐个终止
+      // If there are incomplete uploads, abort them one by one
       if (Uploads && Uploads.length > 0) {
         for (const upload of Uploads) {
           if (upload.Key && upload.UploadId) {
@@ -146,12 +156,12 @@ export default function TestAWS() {
             })
 
             await s3Client.send(abortCommand)
-            console.log(`已终止未完成的上传: ${upload.Key}`)
+            console.log(`Aborted incomplete upload: ${upload.Key}`)
           }
         }
       }
     } catch (error) {
-      console.error('清理失败:', error)
+      console.error('Cleanup failed:', error)
       throw error
     }
   }
@@ -159,9 +169,9 @@ export default function TestAWS() {
   return (
     <div>
       <Input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-      <Button onClick={tempCredentialsUpload}>临时凭证上传</Button>
-      <Button onClick={tempCredentialsMultipartUpload}>临时凭证分段上传</Button>
-      <Button onClick={() => cleanupIncompleteUploads('pandora')}>清理未完成的上传</Button>
+      <Button onClick={tempCredentialsUpload}>Upload with Temporary Credentials</Button>
+      <Button onClick={tempCredentialsMultipartUpload}>Multipart Upload with Temporary Credentials</Button>
+      <Button onClick={() => cleanupIncompleteUploads('pandora')}>Clean Incomplete Uploads</Button>
 
       <Progress value={progress} className="w-full" />
     </div>
