@@ -12,3 +12,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  passwordHash  String
+  storageQuota  Int            @default(1024)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deletedAt     DateTime?
+  uploadedFiles UploadedFile[]
+}
+
+model UploadedFile {
+  id        String    @id @default(cuid())
+  filename  String
+  size      Int
+  url       String
+  mimeType  String
+  hash      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+}
