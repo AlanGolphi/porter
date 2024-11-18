@@ -23,7 +23,7 @@ export const UserProvider = ({
   children: ReactNode
   userPromise: Promise<User | null>
 }) => {
-  let initUser = use(userPromise)
+  const initUser = use(userPromise)
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
