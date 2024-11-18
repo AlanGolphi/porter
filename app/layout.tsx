@@ -1,6 +1,9 @@
+import { UserProvider } from '@/lib/auth'
+import { getUser } from '@/lib/db/queries'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import localFont from 'next/font/local'
+import GlobalHeader from './components/global-header'
 import './globals.css'
 
 const geistSans = localFont({
@@ -25,13 +28,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`bg-white text-black antialiased dark:bg-gray-950 dark:text-white ${geistSans.variable} ${geistMono.variable}`}
-    >
-      <body className="min-h-[100dvh] bg-gray-50">
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`min-h-[100dvh] bg-gray-50 text-black antialiased dark:bg-gray-950 dark:text-white ${geistSans.variable} ${geistMono.variable}`}
+      >
+        <ThemeProvider>
+          <UserProvider userPromise={getUser()}>
+            <GlobalHeader />
+            <main className="container mx-auto h-full px-4">{children}</main>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
