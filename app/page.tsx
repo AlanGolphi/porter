@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div>Home</div>
+import TestWorker from './components/test-worker'
+
+export default async function Home() {
+  return <TestWorker />
 }

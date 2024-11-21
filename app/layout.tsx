@@ -30,12 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`min-h-[100dvh] bg-gray-50 text-black antialiased dark:bg-gray-950 dark:text-white ${geistSans.variable} ${geistMono.variable}`}
+        className={`min-h-[100dvh] bg-gray-50 pt-20 text-black antialiased dark:bg-gray-950 dark:text-white ${geistSans.variable} ${geistMono.variable}`}
       >
         <ThemeProvider>
           <UserProvider userPromise={getUser()}>
             <GlobalHeader />
-            <main className="container mx-auto h-full px-4">{children}</main>
+            <main className="container mx-auto min-h-[100dvh] px-4">{children}</main>
           </UserProvider>
         </ThemeProvider>
       </body>
