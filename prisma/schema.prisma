@@ -12,7 +12,7 @@ model User {
   name          String?
   email         String         @unique
   passwordHash  String
-  storageQuota  Int            @default(1024)
+  storageQuota  BigInt         @default(1073741824) // 1GB
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   deletedAt     DateTime?
@@ -25,10 +25,10 @@ model User {
 model UploadedFile {
   id        String    @id @default(cuid())
   filename  String
-  size      Int
+  size      BigInt
   url       String
   mimeType  String
-  hash      String?   @unique
+  hash      String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?

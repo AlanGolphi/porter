@@ -4,7 +4,7 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT NOT NULL,
     "passwordHash" TEXT NOT NULL,
-    "storageQuota" INTEGER NOT NULL DEFAULT 1024,
+    "storageQuota" BIGINT NOT NULL DEFAULT 1073741824,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deletedAt" TIMESTAMP(3),
@@ -16,10 +16,10 @@ CREATE TABLE "User" (
 CREATE TABLE "UploadedFile" (
     "id" TEXT NOT NULL,
     "filename" TEXT NOT NULL,
-    "size" INTEGER NOT NULL,
+    "size" BIGINT NOT NULL,
     "url" TEXT NOT NULL,
     "mimeType" TEXT NOT NULL,
-    "hash" TEXT NOT NULL,
+    "hash" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deletedAt" TIMESTAMP(3),
@@ -32,7 +32,13 @@ CREATE TABLE "UploadedFile" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "UploadedFile_hash_key" ON "UploadedFile"("hash");
+CREATE INDEX "User_id_idx" ON "User"("id");
+
+-- CreateIndex
+CREATE INDEX "User_email_idx" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "UploadedFile_userId_idx" ON "UploadedFile"("userId");
 
 -- AddForeignKey
 ALTER TABLE "UploadedFile" ADD CONSTRAINT "UploadedFile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
