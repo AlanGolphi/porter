@@ -18,26 +18,57 @@ export type FileItemInfo = {
 export default function UploadSection() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [files, setFiles] = useState<FileItemInfo[]>([])
+  const [isDraggingOver, setIsDraggingOver] = useState(false)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    const filename = file?.name ?? ''
-    const size = file?.size ?? 0
-    const mimeType = file?.type ?? ''
+  const processFiles = useCallback((fileList: FileList | null) => {
+    if (!fileList || fileList.length === 0) return
 
-    if (file) {
-      setFiles([
-        ...files,
-        {
-          id: `${getCurrentDateTag()}-${nanoid(10)}`,
-          file,
-          filename,
-          size,
-          mimeType,
-        },
-      ])
+    try {
+      const newFiles = Array.from(fileList).map((file) => ({
+        id: `${getCurrentDateTag()}-${nanoid(10)}`,
+        file,
+        filename: file.name,
+        size: file.size,
+        mimeType: file.type,
+      }))
+      setFiles((prev) => [...prev, ...newFiles])
+
+      if (inputRef.current) {
+        inputRef.current.value = ''
+      }
+    } catch (error) {
+      console.error(error)
     }
-  }
+  }, [])
+
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      processFiles(e.target.files)
+    },
+    [processFiles],
+  )
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDraggingOver(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDraggingOver(false)
+  }, [])
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setIsDraggingOver(false)
+      processFiles(e.dataTransfer.files)
+    },
+    [processFiles],
+  )
 
   const handleRemoveFile = useCallback((id: string) => {
     setFiles((prev) => prev.filter((file) => file.id !== id))
@@ -50,16 +81,19 @@ export default function UploadSection() {
       ))}
 
       <div
-        onClick={() => {
-          inputRef.current?.click()
-        }}
-        className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all hover:opacity-60"
+        onClick={() => inputRef.current?.click()}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-50' : 'hover:opacity-60'}`}
       >
         <Input
           ref={inputRef}
           type="file"
           accept="*"
+          multiple={true}
           onChange={handleFileChange}
+          onClick={(e) => e.stopPropagation()}
           className="hidden"
         />
         <FilePlusIcon className="mb-2 h-6 w-6" />
