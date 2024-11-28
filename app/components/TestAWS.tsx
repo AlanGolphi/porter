@@ -1,10 +1,10 @@
 'use client'
 
-import { getTempAccessCredentials } from '@/actions/s3/getTempAccessCredentials'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
-import { getCurrentDateTag } from '@/lib/utils'
+import { getTempAccessCredentials } from '@/lib/r2/queries'
+import { calculateRequiredTTL, getCurrentDateTag } from '@/lib/utils'
 import {
   AbortMultipartUploadCommand,
   ListMultipartUploadsCommand,
@@ -56,11 +56,6 @@ async function uploadFileToR2InClient(
   }
 }
 
-const calculateRequiredTTL = (fileSize: number): number => {
-  const estimatedSeconds = Math.ceil(fileSize / (1024 * 1024)) + 30
-  return Math.min(Math.max(estimatedSeconds, 900), 3600)
-}
-
 export default function TestAWS() {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState(0)
@@ -72,7 +67,12 @@ export default function TestAWS() {
     console.log(file)
     console.time('tempCredentialsUpload')
     const buffer = await file.arrayBuffer()
-    const response = await getTempAccessCredentials({ prefix, objectKey: fileKey, ttl: 3600 })
+    const response = await getTempAccessCredentials({
+      prefix,
+      objectKey: fileKey,
+      ttl: 3600,
+      fileSize: file.size,
+    })
     console.log(response)
     const client = generateS3Client(response.result)
     const result = await uploadFileToR2InClient(
@@ -95,9 +95,12 @@ export default function TestAWS() {
     try {
       // Calculate required TTL based on file size
       const requiredTTL = calculateRequiredTTL(file.size)
-      
+
       // Get temporary credentials
-      const response = await getTempAccessCredentials({ ttl: requiredTTL })
+      const response = await getTempAccessCredentials({
+        ttl: requiredTTL,
+        fileSize: file.size,
+      })
       console.log(response)
       if (!response?.result) {
         throw new Error('Failed to get temporary credentials')
@@ -134,7 +137,7 @@ export default function TestAWS() {
   }
 
   async function cleanupIncompleteUploads(bucketName: string) {
-    const response = await getTempAccessCredentials({ ttl: 3600 })
+    const response = await getTempAccessCredentials({ ttl: 3600, fileSize: 0 })
     const s3Client = generateS3Client(response.result)
 
     try {
@@ -170,7 +173,9 @@ export default function TestAWS() {
     <div>
       <Input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
       <Button onClick={tempCredentialsUpload}>Upload with Temporary Credentials</Button>
-      <Button onClick={tempCredentialsMultipartUpload}>Multipart Upload with Temporary Credentials</Button>
+      <Button onClick={tempCredentialsMultipartUpload}>
+        Multipart Upload with Temporary Credentials
+      </Button>
       <Button onClick={() => cleanupIncompleteUploads('pandora')}>Clean Incomplete Uploads</Button>
 
       <Progress value={progress} className="w-full" />

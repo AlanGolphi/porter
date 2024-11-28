@@ -1,19 +1,30 @@
 'use server'
+import { redirect } from 'next/navigation'
+import { getUser } from '../db/queries'
 
-const bucket = process.env.CLOUDFLARE_R2_BUCKET!
+const bucket = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BUCKET!
 const accountId = process.env.CLOUDFLARE_R2_ACCOUNT_ID!
 const token = process.env.CLOUDFLARE_R2_TOKEN!
 const accessId = process.env.CLOUDFLARE_R2_ACCESS_ID!
 
 export async function getTempAccessCredentials({
+  fileSize,
   prefix,
   objectKey,
   ttl,
 }: {
+  fileSize: number
   prefix?: string
   objectKey?: string
   ttl: number
 }): Promise<TempAccessCredentialsResponse> {
+  const user = await getUser()
+  if (!user) {
+    redirect('/login')
+  }
+  if (user.storageQuota < fileSize)
+    throw new Error('Storage quota exceeded')
+
   const cloudflareUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/temp-access-credentials`
 
   const response = await fetch(cloudflareUrl, {

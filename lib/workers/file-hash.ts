@@ -32,8 +32,9 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
 async function calculateHash(file: File, userId: string): Promise<string> {
   const hash = crypto.createHash('sha256')
   const THRESHOLD_FILE_SIZE = 1024 * 1024 * 5 // 5MB
+  const userIdUint8Array = new TextEncoder().encode(userId)
 
-  hash.update(userId)
+  hash.update(userIdUint8Array)
 
   if (file.size < THRESHOLD_FILE_SIZE) {
     const uint8Array = await getChunkUint8Array(file)

@@ -2,10 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useUser } from '@/lib/auth'
 import { useEffect, useRef, useState } from 'react'
 import { CircleProgress } from './circle-progress'
 
 export default function TestWorker() {
+  const { user } = useUser()
   const workerRef = useRef<Worker>()
   const [file, setFile] = useState<File>()
   const [hash, setHash] = useState<string>()
@@ -37,14 +39,14 @@ export default function TestWorker() {
   }, [])
 
   const handleCalculate = async () => {
-    if (!file) {
+    if (!file || !user) {
       return
     }
 
     try {
       setIsCalculating(true)
       console.log('Sending file to worker:', file)
-      workerRef.current?.postMessage({ type: 'calculate', file })
+      workerRef.current?.postMessage({ type: 'calculate', file, userId: user.id })
     } catch (err) {
       console.error('Error sending message to worker:', err)
       setIsCalculating(false)

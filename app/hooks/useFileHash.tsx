@@ -32,7 +32,7 @@ export default function useFileHash({ file }: { file: File }) {
             setFailed(true)
         }
       }
-    } catch (err) {
+    } catch {
       setFailed(true)
     }
 
