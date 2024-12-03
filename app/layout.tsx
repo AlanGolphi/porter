@@ -3,7 +3,6 @@ import { getUser } from '@/lib/db/queries'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import localFont from 'next/font/local'
-import GlobalNav from './components/global-nav'
 import './globals.css'
 
 const geistSans = localFont({
@@ -34,10 +33,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <UserProvider userPromise={getUser()}>
-            <main className="relative flex min-h-dvh w-full bg-backgroundMud p-4 md:pl-28">
-              <GlobalNav />
-              {children}
-            </main>
+            <main className="relative min-h-dvh w-full">{children}</main>
           </UserProvider>
         </ThemeProvider>
       </body>
