@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { getCurrentDateTag } from '@/lib/utils'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { nanoid } from 'nanoid'
-import { useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useRef, useState } from 'react'
 import FileItem from './file-item'
 
 export type FileItemInfo = {
@@ -15,7 +15,7 @@ export type FileItemInfo = {
   mimeType: string
 }
 
-export default function UploadSection() {
+function UploadSection() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [files, setFiles] = useState<FileItemInfo[]>([])
   const [isDraggingOver, setIsDraggingOver] = useState(false)
@@ -102,3 +102,5 @@ export default function UploadSection() {
     </section>
   )
 }
+
+export default memo(UploadSection)
