@@ -12,9 +12,11 @@ const config: Config = {
     extend: {
       colors: {
         background: 'hsl(var(--background))',
+        backgroundMud: 'hsl(var(--background-mud))',
         foreground: 'hsl(var(--foreground))',
         card: {
           DEFAULT: 'hsl(var(--card))',
+          mud: 'hsl(var(--card-mud))',
           foreground: 'hsl(var(--card-foreground))',
         },
         popover: {

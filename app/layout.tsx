@@ -3,7 +3,7 @@ import { getUser } from '@/lib/db/queries'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import localFont from 'next/font/local'
-import GlobalHeader from './components/global-header'
+import GlobalNav from './components/global-nav'
 import './globals.css'
 
 const geistSans = localFont({
@@ -30,12 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`min-h-[100dvh] bg-white pt-20 text-black antialiased dark:bg-gray-950 dark:text-white ${geistSans.variable} ${geistMono.variable}`}
+        className={`min-h-dvh bg-backgroundMud text-black antialiased dark:text-white ${geistSans.variable} ${geistMono.variable}`}
       >
         <ThemeProvider>
           <UserProvider userPromise={getUser()}>
-            <GlobalHeader />
-            <main className="container mx-auto min-h-[100dvh] bg-gray-50 px-4">{children}</main>
+            <main className="relative flex min-h-dvh w-full bg-backgroundMud p-4 md:pl-28">
+              <GlobalNav />
+              {children}
+            </main>
           </UserProvider>
         </ThemeProvider>
       </body>
