@@ -59,7 +59,7 @@ export default function TestWorker() {
       <Button onClick={handleCalculate} disabled={isCalculating || !file}>
         {isCalculating ? 'Calculating...' : 'Calculate'}
       </Button>
-      <CircleProgress progress={progress} />
+      <CircleProgress innerProgress={progress} outerProgress={0} />
       {hash && <p className="text-green-600">Hash: {hash}</p>}
     </div>
   )

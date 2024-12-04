@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils'
 
 interface CircleProgressProps {
-  progress: number
+  innerProgress: number
+  outerProgress: number
   size?: number
   strokeWidth?: number
   className?: string
@@ -9,18 +10,26 @@ interface CircleProgressProps {
 }
 
 export function CircleProgress({
-  progress,
+  innerProgress,
+  outerProgress,
   size = 24,
   strokeWidth = 3,
   className,
   color = '#7ED4AD',
 }: CircleProgressProps) {
-  const normalizedProgress = Math.min(100, Math.max(0, progress))
+  const normalizedInnerProgress = Math.min(100, Math.max(0, innerProgress))
+  const normalizedOuterProgress = Math.min(100, Math.max(0, outerProgress))
 
   const center = size / 2
-  const radius = (size - strokeWidth) / 2
-  const circumference = 2 * Math.PI * radius
-  const strokeDashoffset = circumference - (normalizedProgress / 100) * circumference
+  // Outer ring radius
+  const outerRadius = (size - strokeWidth) / 2
+  // Inner ring radius (slightly smaller)
+  const innerRadius = outerRadius - (strokeWidth * 1.5)
+  
+  const outerCircumference = 2 * Math.PI * outerRadius
+  const innerCircumference = 2 * Math.PI * innerRadius
+  const outerStrokeDashoffset = outerCircumference - (normalizedOuterProgress / 100) * outerCircumference
+  const innerStrokeDashoffset = innerCircumference - (normalizedInnerProgress / 100) * innerCircumference
 
   return (
     <div className={cn('relative inline-flex', className)}>
@@ -30,26 +39,49 @@ export function CircleProgress({
         viewBox={`0 0 ${size} ${size}`}
         className="-rotate-90 transform"
       >
+        {/* Outer ring background */}
         <circle
           cx={center}
           cy={center}
-          r={radius}
+          r={outerRadius}
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-gray-200"
+          className="text-gray-100"
         />
+        {/* Outer ring progress (actual progress) */}
         <circle
           cx={center}
           cy={center}
-          r={radius}
+          r={outerRadius}
           fill="none"
           stroke={color}
           strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          strokeDasharray={outerCircumference}
+          strokeDashoffset={outerStrokeDashoffset}
+          className="text-primary opacity-30"
+        />
+        {/* Inner ring background */}
+        <circle
+          cx={center}
+          cy={center}
+          r={innerRadius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          className="text-gray-100"
+        />
+        {/* Inner ring progress (actual progress) */}
+        <circle
+          cx={center}
+          cy={center}
+          r={innerRadius}
+          fill="none"
+          stroke={color}
+          strokeWidth={strokeWidth}
+          strokeDasharray={innerCircumference}
+          strokeDashoffset={innerStrokeDashoffset}
           className="text-primary transition-all duration-300 ease-in-out"
-          strokeLinecap="round"
         />
       </svg>
     </div>

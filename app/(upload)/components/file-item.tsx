@@ -170,7 +170,7 @@ export default function FileItem({
   useEffect(() => {
     if (typeof window === 'undefined' || hashedRef.current || !uploadFile) return
     try {
-      workerRef.current = new Worker(new URL('../../lib/workers/file-hash.ts', import.meta.url))
+      workerRef.current = new Worker(new URL('../../../lib/workers/file-hash.ts', import.meta.url))
     } catch (err) {
       startUpload()
       console.error('Worker creation failed:', err)
@@ -213,7 +213,7 @@ export default function FileItem({
         <p className="text-sm">{fileItem.filename}</p>
       </div>
 
-      {status === 'hashing' && <CircleProgress progress={hashProgress} />}
+      {status === 'hashing' && <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />}
       {status}
 
       {status === 'uploading' && <Progress value={uploadProgress} className="w-full" />}
