@@ -75,7 +75,9 @@ export default function UploadSection() {
   }, [])
 
   return (
-    <section className="flex w-full flex-col gap-2">
+    <section
+      className={`relative flex w-full shrink-0 grow-0 basis-1/3 flex-col gap-2 ${files.length > 0 ? 'pb-20' : ''} lg:h-full`}
+    >
       {files.map((file) => (
         <FileItem key={file.id} fileItem={file} handleRemoveFile={handleRemoveFile} />
       ))}
@@ -85,7 +87,7 @@ export default function UploadSection() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-50' : 'hover:opacity-60'}`}
+        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-100' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
       >
         <Input
           ref={inputRef}
@@ -96,8 +98,10 @@ export default function UploadSection() {
           onClick={(e) => e.stopPropagation()}
           className="hidden"
         />
-        <FilePlusIcon className="mb-2 h-6 w-6" />
-        <p className="text-sm">Drag & Drop / Select Files</p>
+        <FilePlusIcon className={`h-6 w-6 ${files.length > 0 ? '' : 'mb-2'}`} />
+        <p className={`text-sm ${files.length > 0 ? 'hidden' : 'block'}`}>
+          Drag & Drop / Select Files
+        </p>
       </div>
     </section>
   )

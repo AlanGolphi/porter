@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner'
 import { UserProvider } from '@/lib/auth'
 import { getUser } from '@/lib/db/queries'
 import type { Metadata } from 'next'
@@ -35,6 +36,7 @@ export default function RootLayout({
           <UserProvider userPromise={getUser()}>
             <main className="relative min-h-dvh w-full">{children}</main>
           </UserProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
