@@ -20,12 +20,13 @@ export default async function UploadedTable({ page }: { page: number }) {
     <div className="flex w-full basis-2/3 flex-col rounded-2xl bg-white p-4 lg:h-full">
       <header className="flex w-full border-b p-2">
         <nav className="flex w-full justify-between">
-          <span>Filename</span>
-          <span>URL</span>
-          <span>Action</span>
+          <span className="basis-1/6 text-center">Type</span>
+          <span className="basis-1/4 text-center">Filename</span>
+          <span className="basis-1/4 text-center">URL</span>
+          <span className="basis-1/6 text-center">Action</span>
         </nav>
       </header>
-      <div className="flex w-full basis-2/3 flex-col items-center justify-start gap-2">
+      <div className="flex w-full basis-2/3 flex-col items-center justify-start">
         {files.map((file) => (
           <UploadedFileRow key={file.id} file={file} />
         ))}
