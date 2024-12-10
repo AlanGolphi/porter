@@ -12,7 +12,8 @@ export function UploadedFileRowLoading() {
       <div className="flex basis-1/4 items-center justify-center text-center">
         <Skeleton className="h-6 w-full" />
       </div>
-      <div className="flex basis-1/6 items-center justify-center text-right">
+      <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
+        <Skeleton className="h-6 w-6 rounded-lg" />
         <Skeleton className="h-8 w-10 rounded-lg" />
       </div>
     </div>

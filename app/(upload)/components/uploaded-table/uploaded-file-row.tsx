@@ -2,9 +2,18 @@
 
 import { Button } from '@/components/ui/button'
 import { UploadedFile } from '@prisma/client'
-import { FileText, FileVideo, Image, Trash2 } from 'lucide-react'
+import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
+
+const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
+  loading: () => (
+    <Button variant="outline" className="border-none" size="icon">
+      <QrCode className="h-6 w-6" />
+    </Button>
+  ),
+})
 
 interface UploadedFileRowProps {
   file: UploadedFile
@@ -108,7 +117,8 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
           {truncateUrl(file.url)}
         </a>
       </div>
-      <div className="flex basis-1/6 items-center justify-center text-right">
+      <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
+        <QrCodePopover str={file.url} />
         <Button variant="destructive" size="sm">
           <Trash2 className="h-4 w-4 text-white" />
         </Button>
