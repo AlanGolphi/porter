@@ -17,7 +17,7 @@ export default async function UploadedTable({ page }: { page: number }) {
   })
 
   return (
-    <div className="flex w-full basis-2/3 flex-col rounded-2xl bg-white p-4 lg:h-full">
+    <div className="flex shrink-0 basis-2/3 flex-col rounded-2xl bg-white p-4 lg:h-full">
       <header className="flex w-full border-b p-2">
         <nav className="flex w-full justify-between">
           <span className="basis-1/6 text-center">Type</span>

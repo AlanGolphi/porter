@@ -4,8 +4,10 @@ import { Input } from '@/components/ui/input'
 import { getCurrentDateTag } from '@/lib/utils'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { nanoid } from 'nanoid'
+import dynamic from 'next/dynamic'
 import { useCallback, useRef, useState } from 'react'
-import FileItem from './file-item'
+
+const FileItem = dynamic(() => import('./file-item'))
 
 export type FileItemInfo = {
   id: string
@@ -76,7 +78,7 @@ export default function UploadSection() {
 
   return (
     <section
-      className={`relative flex w-full shrink-0 grow-0 basis-1/3 flex-col gap-2 ${files.length > 0 ? 'pb-20' : ''} lg:h-full`}
+      className={`relative flex min-w-0 shrink-0 grow-0 basis-1/3 flex-col gap-2 overflow-hidden ${files.length > 0 ? 'pb-20' : ''} lg:h-full`}
     >
       {files.map((file) => (
         <FileItem key={file.id} fileItem={file} handleRemoveFile={handleRemoveFile} />
@@ -87,7 +89,7 @@ export default function UploadSection() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-100' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
+        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-200' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
       >
         <Input
           ref={inputRef}

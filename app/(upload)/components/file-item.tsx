@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Progress } from '@/components/ui/progress'
 import { getFileByHash, storeFile } from '@/lib/db/queries'
 import { getTempAccessCredentials } from '@/lib/r2/queries'
 import { calculateRequiredTTL } from '@/lib/utils'
@@ -207,17 +206,16 @@ export default function FileItem({
   }, [uploadFile, startUpload])
 
   return (
-    <div className="relative flex w-full items-center justify-between rounded-lg bg-white p-4 transition-all hover:opacity-60">
+    <div className="relative flex h-auto w-full items-center justify-between rounded-lg bg-white p-4 transition-all hover:opacity-60">
       <div className="flex items-center gap-2">
         <FileIcon className="h-6 w-6" />
         <p className="text-sm">{fileItem.filename}</p>
       </div>
 
-      {status === 'hashing' && <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />}
+      {(status === 'hashing' || status === 'uploading') && (
+        <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />
+      )}
       {status}
-
-      {status === 'uploading' && <Progress value={uploadProgress} className="w-full" />}
-
       {status === 'finded' && <p>File already exists {findedFile?.filename}</p>}
 
       <Button variant="ghost" size="icon" onClick={() => handleRemoveFile(fileItem.id)}>
