@@ -78,7 +78,7 @@ export default function UploadSection() {
 
   return (
     <section
-      className={`relative flex min-w-0 shrink-0 grow-0 basis-1/3 flex-col gap-2 overflow-hidden ${files.length > 0 ? 'pb-20' : ''} lg:h-full`}
+      className={`relative flex w-full basis-1/3 flex-col gap-2 overflow-hidden ${files.length > 0 ? 'pb-20' : ''} lg:h-full lg:w-auto lg:min-w-0`}
     >
       {files.map((file) => (
         <FileItem key={file.id} fileItem={file} handleRemoveFile={handleRemoveFile} />

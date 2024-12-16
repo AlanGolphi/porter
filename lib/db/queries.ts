@@ -47,27 +47,33 @@ export const storeFile = async ({ filename, fileSize, mimeType, hash, url }: Sto
   }
   if (user.storageQuota < fileSize) throw new Error('Storage quota exceeded')
 
-  await db.user.update({
-    where: { id: user.id },
-    data: { storageQuota: { decrement: fileSize } },
+  const transactionStoredFile = await db.$transaction(async (tx) => {
+    await tx.user.update({
+      where: { id: user.id },
+      data: { storageQuota: { decrement: fileSize } },
+    })
+
+    const storedFile = await tx.uploadedFile.create({
+      data: {
+        filename,
+        size: fileSize,
+        mimeType,
+        hash,
+        url,
+        userId: user.id,
+      },
+    })
+    return storedFile
   })
 
-  const storedFile = await db.uploadedFile.create({
-    data: {
-      filename,
-      size: fileSize,
-      mimeType,
-      hash,
-      url,
-      userId: user.id,
-    },
-  })
-  return storedFile
+  return transactionStoredFile
 }
 
 export const getUserUploadedFiles = async (page = 1, limit = 15, q?: string, mimeType?: string) => {
   const user = await getUser()
-  if (!user) throw new Error('User not found')
+  if (!user) {
+    redirect('/login')
+  }
   const files = await db.uploadedFile.findMany({
     where: {
       userId: user.id,
