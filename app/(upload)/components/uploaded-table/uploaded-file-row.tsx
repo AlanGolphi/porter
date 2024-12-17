@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
   loading: () => (
-    <Button variant="outline" className="border-none" size="icon">
+    <Button variant="outline" className="border-none" aria-label="QR Code" size="icon">
       <QrCode className="h-6 w-6" />
     </Button>
   ),
@@ -119,7 +119,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       </div>
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
         <QrCodePopover str={file.url} />
-        <Button variant="destructive" size="sm">
+        <Button variant="destructive" size="sm" aria-label="Delete">
           <Trash2 className="h-4 w-4 text-white" />
         </Button>
       </div>

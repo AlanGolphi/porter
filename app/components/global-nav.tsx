@@ -29,6 +29,7 @@ export default function GlobalNav() {
             <Button
               size="icon"
               variant="outline"
+              aria-label="Toggle theme"
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <Moon className="hidden !size-6 dark:block" />
@@ -37,6 +38,7 @@ export default function GlobalNav() {
             <Button
               size="icon"
               variant="outline"
+              aria-label="Settings"
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <Settings className="!size-6" />
@@ -44,6 +46,7 @@ export default function GlobalNav() {
             <Button
               size="icon"
               variant="outline"
+              aria-label="User"
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <CircleUser className="!size-6" />

@@ -41,7 +41,13 @@ export function QRCodePopover({ str }: { str: string }) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="border-none" size="icon" onClick={generateQrCode}>
+        <Button
+          size="icon"
+          variant="outline"
+          aria-label="QR Code"
+          className="border-none"
+          onClick={generateQrCode}
+        >
           <QrCode className="h-6 w-6" />
         </Button>
       </PopoverTrigger>
