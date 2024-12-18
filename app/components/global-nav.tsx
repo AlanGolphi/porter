@@ -2,13 +2,45 @@
 
 import Logo from '@/app/assets/images/logo.png'
 import { Button } from '@/components/ui/button'
-import { CircleUser, Languages, Menu, Moon, Sun } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { cn, getLocaleFromCookie } from '@/lib/utils'
+import { Check, CircleUser, Languages, Menu, Moon, Sun } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function GlobalNav() {
+  const [locale, setLocale] = useState('en')
   const { theme, setTheme } = useTheme()
+  const router = useRouter()
+  const t = useTranslations('UploadPage')
+
+  const handleToggleTheme = useCallback(() => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }, [theme, setTheme])
+
+  const handleToggleLanguage = useCallback(
+    (newLocale: string) => {
+      if (newLocale === locale || typeof window === 'undefined') return
+      document.cookie = `locale=${newLocale}; path=/`
+      router.refresh()
+    },
+    [locale, router],
+  )
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const locale = getLocaleFromCookie(document.cookie)
+    setLocale(locale)
+  }, [])
 
   return (
     <>
@@ -34,25 +66,45 @@ export default function GlobalNav() {
             <Button
               size="icon"
               variant="outline"
-              aria-label="Toggle theme"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label={t('AriaLabel.ToggleTheme')}
+              onClick={handleToggleTheme}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <Moon className="hidden !size-6 dark:block" />
               <Sun className="block !size-6 dark:hidden" />
             </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  aria-label={t('AriaLabel.ToggleLanguage')}
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
+                >
+                  <Languages className="!size-6" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  className="justify-between hover:bg-opacity-90"
+                  onClick={() => handleToggleLanguage('en')}
+                >
+                  <span>English</span>
+                  <Check className={cn('hidden', locale === 'en' && 'block size-4')} />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="justify-between hover:bg-opacity-90"
+                  onClick={() => handleToggleLanguage('zh')}
+                >
+                  <span>中文</span>
+                  <Check className={cn('hidden', locale === 'zh' && 'block size-4')} />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button
               size="icon"
               variant="outline"
-              aria-label="Settings"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
-            >
-              <Languages className="!size-6" />
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              aria-label="User"
+              aria-label={t('AriaLabel.UserInfo')}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <CircleUser className="!size-6" />

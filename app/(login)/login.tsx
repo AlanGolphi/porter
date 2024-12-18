@@ -5,12 +5,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ActionState } from '@/lib/auth/middleware'
 import { CircleIcon, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useActionState } from 'react'
 import { signIn, signUp } from './actions'
 
 export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
+  const t = useTranslations('LoginPage')
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect')
   const priceId = searchParams.get('priceId')
@@ -27,7 +29,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <CircleIcon className="h-12 w-12 text-orange-500" />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {mode === 'signin' ? 'Sign in to your account' : 'Create your account'}
+          {mode === 'signin' ? t('SignInToYourAccount') : t('CreateYourAccount')}
         </h2>
       </div>
 
@@ -38,7 +40,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <input type="hidden" name="inviteId" value={inviteId || ''} />
           <div>
             <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
+              {t('Email')}
             </Label>
             <div className="mt-1">
               <Input
@@ -49,14 +51,14 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
                 required
                 maxLength={50}
                 className="relative block w-full appearance-none rounded-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                placeholder="Enter your email"
+                placeholder={t('EmailPlaceholder')}
               />
             </div>
           </div>
 
           <div>
             <Label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
+              {t('Password')}
             </Label>
             <div className="mt-1">
               <Input
@@ -68,7 +70,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
                 minLength={8}
                 maxLength={100}
                 className="relative block w-full appearance-none rounded-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                placeholder="Enter your password"
+                placeholder={t('PasswordPlaceholder')}
               />
             </div>
           </div>
@@ -84,12 +86,12 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
               {pending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Loading...
+                  {t('Loading')}
                 </>
               ) : mode === 'signin' ? (
-                'Sign in'
+                t('SignIn')
               ) : (
-                'Sign up'
+                t('SignUp')
               )}
             </Button>
           </div>
@@ -102,7 +104,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="bg-gray-50 px-2 text-gray-500">
-                {mode === 'signin' ? 'New to our platform?' : 'Already have an account?'}
+                {mode === 'signin' ? t('NewToPlatform') : t('AlreadyHaveAccount')}
               </span>
             </div>
           </div>
@@ -114,7 +116,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
               }${priceId ? `&priceId=${priceId}` : ''}`}
               className="flex w-full justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
-              {mode === 'signin' ? 'Create an account' : 'Sign in to existing account'}
+              {mode === 'signin' ? t('CreateAnAccount') : t('SignInToExistingAccount')}
             </Link>
           </div>
         </div>

@@ -19,3 +19,12 @@ export const calculateRequiredTTL = (fileSize: number): number => {
   const estimatedSeconds = Math.min(Math.ceil(fileSize / (1024 * 1024)) + 30, 604800)
   return Math.min(Math.max(estimatedSeconds, 900), 3600)
 }
+
+export function getLocaleFromCookie(cookie: string) {
+  if (!cookie) return 'en'
+  const splitCookie = cookie.split(';')
+  const localeCookie = splitCookie.find((c) => c.includes('locale'))
+  if (!localeCookie) return 'en'
+  const locale = localeCookie.split('=')[1]
+  return locale || 'en'
+}

@@ -1,0 +1,34 @@
+{
+  "LoginPage": {
+    "Loading": "加载中...",
+    "SignInToYourAccount": "登录您的账号",
+    "CreateYourAccount": "创建您的账号",
+    "Email": "邮箱",
+    "Password": "密码",
+    "SignIn": "登录",
+    "SignUp": "注册",
+    "NewToPlatform": "首次使用我们的平台？",
+    "AlreadyHaveAccount": "已经有账号了？",
+    "CreateAnAccount": "创建账号",
+    "SignInToExistingAccount": "登录已有账号",
+    "EmailPlaceholder": "请输入邮箱",
+    "PasswordPlaceholder": "请输入密码"
+  },
+  "UploadPage": {
+    "AriaLabel": {
+      "ToggleTheme": "切换主题",
+      "ToggleLanguage": "切换语言",
+      "UserInfo": "用户信息"
+    },
+    "nav": {
+      "home": "首页",
+      "theme": "切换主题",
+      "language": "语言",
+      "user": "用户"
+    },
+    "upload": {
+      "dragDrop": "拖拽文件或点击选择",
+      "selectFiles": "选择文件"
+    }
+  }
+}

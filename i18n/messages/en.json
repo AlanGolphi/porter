@@ -1,0 +1,34 @@
+{
+  "LoginPage": {
+    "Loading": "Loading...",
+    "SignInToYourAccount": "Sign in to your account",
+    "CreateYourAccount": "Create your account",
+    "Email": "Email",
+    "Password": "Password",
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up",
+    "NewToPlatform": "New to our platform?",
+    "AlreadyHaveAccount": "Already have an account?",
+    "CreateAnAccount": "Create an account",
+    "SignInToExistingAccount": "Sign in to existing account",
+    "EmailPlaceholder": "Enter your email",
+    "PasswordPlaceholder": "Enter your password"
+  },
+  "UploadPage": {
+    "AriaLabel": {
+      "ToggleTheme": "Toggle theme",
+      "ToggleLanguage": "Toggle language",
+      "UserInfo": "User info"
+    },
+    "nav": {
+      "home": "Home",
+      "theme": "Toggle theme",
+      "language": "Language",
+      "user": "User"
+    },
+    "upload": {
+      "dragDrop": "Drag & Drop / Select Files",
+      "selectFiles": "Select Files"
+    }
+  }
+}

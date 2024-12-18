@@ -1,4 +1,9 @@
-import GlobalNav from '../components/global-nav'
+import dynamic from 'next/dynamic'
+import GlobalNavLoading from '../components/global-nav-loading'
+
+const GlobalNav = dynamic(() => import('../components/global-nav'), {
+  loading: () => <GlobalNavLoading />,
+})
 
 export default function UploadLayout({
   children,
