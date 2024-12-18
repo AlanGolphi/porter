@@ -89,7 +89,7 @@ export default function UploadSection() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-200' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
+        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-card-mud p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-200' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
       >
         <Input
           ref={inputRef}

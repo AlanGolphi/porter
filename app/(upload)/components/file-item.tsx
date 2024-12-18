@@ -206,7 +206,7 @@ export default function FileItem({
   }, [uploadFile, startUpload])
 
   return (
-    <div className="relative flex h-auto w-full items-center justify-between rounded-lg bg-white p-4 transition-all hover:opacity-60">
+    <div className="relative flex h-auto w-full items-center justify-between rounded-lg bg-card-mud p-4 transition-all hover:opacity-60">
       <div className="flex items-center gap-2">
         <FileIcon className="h-6 w-6" />
         <p className="text-sm">{fileItem.filename}</p>

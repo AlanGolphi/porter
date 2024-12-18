@@ -5,7 +5,7 @@ import UploadedTable from './components/uploaded-table'
 import { Loading } from './components/uploaded-table/loading'
 
 const UploadSection = dynamic(() => import('./components/upload-section'), {
-  loading: () => <Skeleton className="w-full basis-1/3 rounded-2xl bg-white lg:h-full" />,
+  loading: () => <Skeleton className="w-full basis-1/3 rounded-2xl bg-card-mud lg:h-full" />,
 })
 
 export default async function UploadPage({ searchParams }: { searchParams: SearchParams }) {

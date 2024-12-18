@@ -91,7 +91,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
   return (
     <article
       key={file.id}
-      className="flex h-14 w-full justify-between border-b p-2 last:border-none hover:bg-gray-50"
+      className="flex h-14 w-full justify-between border-b p-2 last:border-none hover:bg-card-mud/70"
     >
       <div className="flex basis-1/6 items-center justify-center">{getIcon(file.mimeType)}</div>
       <div

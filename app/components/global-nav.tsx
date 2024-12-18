@@ -1,10 +1,15 @@
+'use client'
+
 import Logo from '@/app/assets/images/logo.png'
 import { Button } from '@/components/ui/button'
-import { CircleUser, Menu, Moon, Settings, Sun } from 'lucide-react'
+import { CircleUser, Languages, Menu, Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function GlobalNav() {
+  const { theme, setTheme } = useTheme()
+
   return (
     <>
       {/* mobile navbar */}
@@ -30,6 +35,7 @@ export default function GlobalNav() {
               size="icon"
               variant="outline"
               aria-label="Toggle theme"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
               <Moon className="hidden !size-6 dark:block" />
@@ -41,7 +47,7 @@ export default function GlobalNav() {
               aria-label="Settings"
               className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
             >
-              <Settings className="!size-6" />
+              <Languages className="!size-6" />
             </Button>
             <Button
               size="icon"

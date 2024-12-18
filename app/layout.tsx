@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`min-h-dvh bg-backgroundMud text-black antialiased dark:text-white ${geistSans.variable} ${geistMono.variable}`}
       >
-        <ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <UserProvider userPromise={getUser()}>
             <main className="relative min-h-dvh w-full">{children}</main>
           </UserProvider>
