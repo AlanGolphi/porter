@@ -8,7 +8,7 @@ import { CircleProgress } from '../(upload)/components/circle-progress'
 
 export default function TestWorker() {
   const { user } = useUser()
-  const workerRef = useRef<Worker>()
+  const workerRef = useRef<Worker>(null)
   const [file, setFile] = useState<File>()
   const [hash, setHash] = useState<string>()
   const [isCalculating, setIsCalculating] = useState(false)

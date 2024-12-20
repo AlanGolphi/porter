@@ -8,7 +8,7 @@ export default function useFileHash({ file }: { file: File }) {
   const [isCalculating, setIsCalculating] = useState(false)
   const [failed, setFailed] = useState(false)
 
-  const workerRef = useRef<Worker>()
+  const workerRef = useRef<Worker>(null)
 
   useEffect(() => {
     if (typeof window === 'undefined' || !file) return

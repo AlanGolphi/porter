@@ -36,7 +36,7 @@ export default function FileItem({
 }) {
   const THRESHOLD_FILE_SIZE = 1024 * 1024 * 5 // 5MB
 
-  const workerRef = useRef<Worker>()
+  const workerRef = useRef<Worker>(null)
   const hashedRef = useRef<boolean>(false)
 
   const [status, setStatus] = useState<FileItemStatus>('init')

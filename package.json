@@ -12,7 +12,9 @@
     "prepare": "husky"
   },
   "overrides": {
-    "react-is": "^19.0.0-rc-69d4b800-20241021"
+    "react-is": "^19.0.0-rc-69d4b800-20241021",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.682.0",
@@ -31,13 +33,13 @@
     "jose": "^5.9.6",
     "lucide-react": "^0.454.0",
     "nanoid": "^5.0.8",
-    "next": "^15.0.3",
+    "next": "15.1.2",
     "next-intl": "^3.23.5",
     "next-safe-action": "^7.9.9",
     "next-themes": "^0.3.0",
     "qrcode": "^1.5.4",
-    "react": "^19.0.0-rc-7ac8e612-20241113",
-    "react-dom": "^19.0.0-rc-7ac8e612-20241113",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
@@ -46,10 +48,10 @@
   "devDependencies": {
     "@types/node": "^20.17.6",
     "@types/qrcode": "^1.5.5",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
     "eslint": "^8",
-    "eslint-config-next": "^15.0.3",
+    "eslint-config-next": "15.1.2",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "only-allow": "^1.2.1",
