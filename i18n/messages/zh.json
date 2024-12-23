@@ -26,15 +26,15 @@
       "ToggleLanguage": "切换语言",
       "UserInfo": "用户信息"
     },
-    "nav": {
+    "Nav": {
       "home": "首页",
       "theme": "切换主题",
       "language": "语言",
       "user": "用户"
     },
-    "upload": {
-      "dragDrop": "拖拽文件或点击选择",
-      "selectFiles": "选择文件"
+    "Upload": {
+      "DragDrop": "拖拽文件或点击选择",
+      "NoFilesUploaded": "暂无已上传文件"
     }
   }
 }

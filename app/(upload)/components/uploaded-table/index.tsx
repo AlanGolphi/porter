@@ -1,6 +1,10 @@
 import { db } from '@/lib/db'
+import { getUser } from '@/lib/db/queries'
 import { UploadedFile } from '@prisma/client'
+import { PackageOpen } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import dynamic from 'next/dynamic'
+import { redirect } from 'next/navigation'
 import { UploadedFileRowLoading } from './loading'
 
 const UploadedFileRow = dynamic(
@@ -11,7 +15,16 @@ const UploadedFileRow = dynamic(
 )
 
 export default async function UploadedTable({ page }: { page: number }) {
+  const t = await getTranslations('UploadPage')
+  const user = await getUser()
+  if (!user) {
+    redirect('/login')
+  }
   const files: UploadedFile[] = await db.uploadedFile.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: { createdAt: 'desc' },
     take: 10,
     skip: (page - 1) * 10,
   })
@@ -26,11 +39,18 @@ export default async function UploadedTable({ page }: { page: number }) {
           <span className="basis-1/6 text-center">Action</span>
         </nav>
       </header>
-      <div className="flex w-full basis-2/3 flex-col items-center justify-start">
-        {files.map((file) => (
-          <UploadedFileRow key={file.id} file={file} />
-        ))}
-      </div>
+      {files.length > 0 ? (
+        <div className="flex w-full basis-2/3 flex-col items-center justify-start">
+          {files.map((file) => (
+            <UploadedFileRow key={file.id} file={file} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex w-full basis-2/3 flex-col items-center justify-center">
+          <PackageOpen className="h-12 w-12" strokeWidth={1} />
+          <span className="text-center">{t('Upload.NoFilesUploaded')}</span>
+        </div>
+      )}
     </div>
   )
 }

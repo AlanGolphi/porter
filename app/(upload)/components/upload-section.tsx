@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import { getCurrentDateTag } from '@/lib/utils'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { nanoid } from 'nanoid'
+import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
 import { useCallback, useRef, useState } from 'react'
 
@@ -18,6 +19,7 @@ export type FileItemInfo = {
 }
 
 export default function UploadSection() {
+  const t = useTranslations('UploadPage')
   const inputRef = useRef<HTMLInputElement>(null)
   const [files, setFiles] = useState<FileItemInfo[]>([])
   const [isDraggingOver, setIsDraggingOver] = useState(false)
@@ -103,6 +105,7 @@ export default function UploadSection() {
         <FilePlusIcon className={`h-6 w-6 ${files.length > 0 ? '' : 'mb-2'}`} />
         <p className={`text-sm ${files.length > 0 ? 'hidden' : 'block'}`}>
           Drag & Drop / Select Files
+          {t('Upload.DragDrop')}
         </p>
       </div>
     </section>

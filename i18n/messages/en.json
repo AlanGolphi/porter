@@ -26,15 +26,15 @@
       "ToggleLanguage": "Toggle language",
       "UserInfo": "User info"
     },
-    "nav": {
+    "Nav": {
       "home": "Home",
       "theme": "Toggle theme",
       "language": "Language",
       "user": "User"
     },
-    "upload": {
-      "dragDrop": "Drag & Drop / Select Files",
-      "selectFiles": "Select Files"
+    "Upload": {
+      "DragDrop": "Drag & Drop / Select Files",
+      "NoFilesUploaded": "No files uploaded yet"
     }
   }
 }
