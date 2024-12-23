@@ -103,10 +103,7 @@ export default function UploadSection() {
           className="hidden"
         />
         <FilePlusIcon className={`h-6 w-6 ${files.length > 0 ? '' : 'mb-2'}`} />
-        <p className={`text-sm ${files.length > 0 ? 'hidden' : 'block'}`}>
-          Drag & Drop / Select Files
-          {t('Upload.DragDrop')}
-        </p>
+        <p className={`text-sm ${files.length > 0 ? 'hidden' : 'block'}`}>{t('Upload.DragDrop')}</p>
       </div>
     </section>
   )
