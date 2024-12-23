@@ -23,7 +23,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   )
 
   return (
-    <div className="flex min-h-[100dvh] flex-col justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-[calc(100dvh-2rem)] w-full flex-col justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <CircleIcon className="h-12 w-12 text-orange-500" />
@@ -38,6 +38,26 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <input type="hidden" name="redirect" value={redirect || ''} />
           <input type="hidden" name="priceId" value={priceId || ''} />
           <input type="hidden" name="inviteId" value={inviteId || ''} />
+          {mode === 'signup' && (
+            <div>
+              <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                {t('Name')}
+              </Label>
+              <div className="mt-1">
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  maxLength={50}
+                  className="relative block w-full appearance-none rounded-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                  placeholder={t('NamePlaceholder')}
+                />
+              </div>
+            </div>
+          )}
+
           <div>
             <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
               {t('Email')}

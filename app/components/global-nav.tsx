@@ -31,6 +31,7 @@ export default function GlobalNav() {
     (newLocale: string) => {
       if (newLocale === locale || typeof window === 'undefined') return
       document.cookie = `locale=${newLocale}; path=/`
+      setLocale(newLocale)
       router.refresh()
     },
     [locale, router],

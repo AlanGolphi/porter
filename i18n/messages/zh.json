@@ -3,6 +3,7 @@
     "Loading": "加载中...",
     "SignInToYourAccount": "登录您的账号",
     "CreateYourAccount": "创建您的账号",
+    "Name": "昵称",
     "Email": "邮箱",
     "Password": "密码",
     "SignIn": "登录",
@@ -11,8 +12,13 @@
     "AlreadyHaveAccount": "已经有账号了？",
     "CreateAnAccount": "创建账号",
     "SignInToExistingAccount": "登录已有账号",
+    "NamePlaceholder": "请输入昵称",
     "EmailPlaceholder": "请输入邮箱",
     "PasswordPlaceholder": "请输入密码"
+  },
+  "PostSignUpPage": {
+    "EmailSent": "邮件已发送",
+    "CheckYourEmail": "检查您的邮箱,并点击验证链接"
   },
   "UploadPage": {
     "AriaLabel": {

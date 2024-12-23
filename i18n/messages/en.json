@@ -3,6 +3,7 @@
     "Loading": "Loading...",
     "SignInToYourAccount": "Sign in to your account",
     "CreateYourAccount": "Create your account",
+    "Name": "Name",
     "Email": "Email",
     "Password": "Password",
     "SignIn": "Sign In",
@@ -11,8 +12,13 @@
     "AlreadyHaveAccount": "Already have an account?",
     "CreateAnAccount": "Create an account",
     "SignInToExistingAccount": "Sign in to existing account",
+    "NamePlaceholder": "Enter your name",
     "EmailPlaceholder": "Enter your email",
     "PasswordPlaceholder": "Enter your password"
+  },
+  "PostSignUpPage": {
+    "EmailSent": "Email sent",
+    "CheckYourEmail": "Check your email, and click the verification link"
   },
   "UploadPage": {
     "AriaLabel": {

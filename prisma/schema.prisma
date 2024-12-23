@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String         @unique
-  passwordHash  String
-  storageQuota  BigInt         @default(1073741824) // 1GB
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  deletedAt     DateTime?
-  uploadedFiles UploadedFile[]
+  id                String         @id @default(cuid())
+  name              String?
+  email             String         @unique
+  passwordHash      String
+  emailVerified     Boolean        @default(false)
+  verificationToken String?
+  storageQuota      BigInt         @default(1073741824) // 1GB
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  deletedAt         DateTime?
+  uploadedFiles     UploadedFile[]
 
   @@index([id])
   @@index([email])

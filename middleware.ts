@@ -1,7 +1,7 @@
 import { signToken, verifyToken } from '@/lib/auth/session'
 import { NextRequest, NextResponse } from 'next/server'
 
-const publicRoutes = ['/sign-in', '/sign-up']
+const publicRoutes = ['/sign-in', '/sign-up', '/post-sign-up', '/verify']
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', request.url))
   }
 
-  let res = NextResponse.next()
+  const res = NextResponse.next()
 
   if (sessionCookie) {
     try {
