@@ -18,7 +18,13 @@
   },
   "PostSignUpPage": {
     "EmailSent": "Email sent",
-    "CheckYourEmail": "Check your email, and click the verification link"
+    "CheckYourEmail": "Check your email, and click the verification link",
+    "ResendEmail": "Didn't receive the email? Resend it",
+    "EmailResent": "Resent successfully",
+    "CheckYourInbox": "Check your inbox to verify your email",
+    "EmailResendFailed": "Failed to resend email",
+    "EmailResendFailedDescription": "Failed to resend email, please try again later",
+    "TooFrequent": "Too Frequent, Please try again later"
   },
   "UploadPage": {
     "AriaLabel": {

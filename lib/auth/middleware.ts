@@ -6,12 +6,13 @@ export type ActionState<T = any> = {
   data?: T
 }
 
-export const createSuccessState = <T>(data: T) => ({
+export const createSuccessState = <T>(data: T): ActionState<T> => ({
   success: true,
+  error: '',
   data,
 })
 
-export const createErrorState = (error: string) => ({
+export const createErrorState = (error: string): ActionState => ({
   success: false,
   error,
 })

@@ -20,10 +20,9 @@ export async function getTempAccessCredentials({
 }): Promise<TempAccessCredentialsResponse> {
   const user = await getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/sign-in')
   }
-  if (user.storageQuota < fileSize)
-    throw new Error('Storage quota exceeded')
+  if (user.storageQuota < fileSize) throw new Error('Storage quota exceeded')
 
   const cloudflareUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/temp-access-credentials`
 

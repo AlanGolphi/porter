@@ -23,7 +23,7 @@ export const getUser = async () => {
 export const getFileByHash = async (hash: string) => {
   const user = await getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/sign-in')
   }
 
   const file = await db.uploadedFile.findFirst({
@@ -43,7 +43,7 @@ interface StoreFileProps {
 export const storeFile = async ({ filename, fileSize, mimeType, hash, url }: StoreFileProps) => {
   const user = await getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/sign-in')
   }
   if (user.storageQuota < fileSize) throw new Error('Storage quota exceeded')
 
@@ -72,7 +72,7 @@ export const storeFile = async ({ filename, fileSize, mimeType, hash, url }: Sto
 export const getUserUploadedFiles = async (page = 1, limit = 15, q?: string, mimeType?: string) => {
   const user = await getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/sign-in')
   }
   const files = await db.uploadedFile.findMany({
     where: {

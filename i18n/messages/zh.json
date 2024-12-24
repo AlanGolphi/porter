@@ -18,7 +18,13 @@
   },
   "PostSignUpPage": {
     "EmailSent": "邮件已发送",
-    "CheckYourEmail": "检查您的邮箱,并点击验证链接"
+    "CheckYourEmail": "检查您的邮箱,并点击验证链接",
+    "ResendEmail": "未收到邮件？重新发送",
+    "EmailResent": "重发成功",
+    "CheckYourInbox": "请查收您的验证邮件",
+    "EmailResendFailed": "重发失败",
+    "EmailResendFailedDescription": "重发失败，请稍后再试",
+    "TooFrequent": "发送过于频繁，请稍后再试"
   },
   "UploadPage": {
     "AriaLabel": {

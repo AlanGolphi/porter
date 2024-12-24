@@ -18,7 +18,7 @@ export default async function UploadedTable({ page }: { page: number }) {
   const t = await getTranslations('UploadPage')
   const user = await getUser()
   if (!user) {
-    redirect('/login')
+    redirect('/sign-in')
   }
   const files: UploadedFile[] = await db.uploadedFile.findMany({
     where: {
