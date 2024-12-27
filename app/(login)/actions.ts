@@ -60,6 +60,7 @@ export const signUp = validatedAction(signInSchema, async (data, formData) => {
 
   const newUser = await db.user.create({
     data: {
+      name,
       email,
       passwordHash,
       verificationToken,
