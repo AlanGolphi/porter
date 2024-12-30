@@ -24,7 +24,7 @@
     "CheckYourInbox": "Check your inbox to verify your email",
     "EmailResendFailed": "Failed to resend email",
     "EmailResendFailedDescription": "Failed to resend email, please try again later",
-    "TooFrequent": "Too Frequent, Please try again later"
+    "TooFrequent": "Too Frequent, please try again later"
   },
   "UploadPage": {
     "AriaLabel": {
@@ -42,5 +42,11 @@
       "DragDrop": "Drag & Drop / Select Files",
       "NoFilesUploaded": "No files uploaded yet"
     }
+  },
+  "VerifyPage": {
+    "Verifying": "Verifying...",
+    "Redirecting": "Redirecting...",
+    "Verified": "Email verified, you're good to go!",
+    "InvalidToken": "Invalid token, please try again"
   }
 }

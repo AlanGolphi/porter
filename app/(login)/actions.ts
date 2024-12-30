@@ -1,9 +1,15 @@
 'use server'
 
 import { CNEmailTemplate, EnEmailTemplate } from '@/app/components/email-template'
-import { createErrorState, createSuccessState, validatedAction } from '@/lib/auth/middleware'
+import {
+  ActionState,
+  createErrorState,
+  createSuccessState,
+  validatedAction,
+} from '@/lib/auth/middleware'
 import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session'
 import { db } from '@/lib/db'
+import { getUser } from '@/lib/db/queries'
 import { randomBytes } from 'crypto'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { redirect } from 'next/navigation'
@@ -90,7 +96,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     })
     await db.user.update({
       where: { id: newUser.id },
-      data: { emailSentAt: new Date() },
+      data: { emailSentAt: new Date(), verificationToken },
     })
   } catch (error) {
     console.error(error)
@@ -143,4 +149,22 @@ export const resendEmail = async (formData: FormData) => {
       `Email resend failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
     )
   }
+}
+
+export const verifyEmail = async (token: string): Promise<ActionState> => {
+  const user = await getUser()
+  const t = await getTranslations('VerifyPage')
+
+  if (!user) {
+    redirect('/sign-in')
+  }
+
+  if (token !== user.verificationToken) {
+    return createErrorState(t('InvalidToken'))
+  }
+  await db.user.update({
+    where: { id: user.id },
+    data: { emailVerified: true, verificationToken: null },
+  })
+  return createSuccessState(t('Verified'))
 }
