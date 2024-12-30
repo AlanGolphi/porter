@@ -15,6 +15,11 @@ const porterUrl = process.env.NEXT_PUBLIC_PORTER_URL!
 const resend = new Resend(process.env.RESEND_PRIVATE_KEY!)
 
 const signInSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+})
+
+const signUpSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string(),
@@ -42,7 +47,7 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
   redirect(`/${redirectTo ?? ''}`)
 })
 
-export const signUp = validatedAction(signInSchema, async (data, formData) => {
+export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   const { name, email, password } = data
   const redirectTo = formData.get('redirect') as string | null
 

@@ -23,7 +23,9 @@ export function ResendForm({ email }: { email: string }) {
     }
   }, [isLoading, isSuccess])
 
-  async function clientAction(formData: FormData) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
     setIsLoading(true)
     try {
       const resendResult = await resendEmail(formData)
@@ -53,7 +55,7 @@ export function ResendForm({ email }: { email: string }) {
   }
 
   return (
-    <form action={clientAction}>
+    <form onSubmit={handleSubmit}>
       <input type="hidden" name="email" value={email} />
       <Button
         variant="link"
