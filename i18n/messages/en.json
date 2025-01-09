@@ -30,7 +30,8 @@
     "AriaLabel": {
       "ToggleTheme": "Toggle theme",
       "ToggleLanguage": "Toggle language",
-      "UserInfo": "User info"
+      "UserInfo": "User info",
+      "SignOut": "Sign out"
     },
     "Nav": {
       "home": "Home",

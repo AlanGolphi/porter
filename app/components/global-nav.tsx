@@ -8,21 +8,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useUser } from '@/lib/auth'
 import { cn, getLocaleFromCookie } from '@/lib/utils'
-import { Check, CircleUser, Languages, Menu, Moon, Sun } from 'lucide-react'
+import { Check, CircleUser, Languages, LogOut, Menu, Moon, Sun } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { signOut } from '../(login)/actions'
 
 export default function GlobalNav() {
   const [locale, setLocale] = useState('en')
   const { theme, setTheme } = useTheme()
   const router = useRouter()
   const t = useTranslations('UploadPage')
-
+  const { setUser } = useUser()
   const handleToggleTheme = useCallback(() => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }, [theme, setTheme])
@@ -36,6 +38,12 @@ export default function GlobalNav() {
     },
     [locale, router],
   )
+
+  const handleSignOut = useCallback(async () => {
+    await signOut()
+    setUser(null)
+    router.replace('/sign-in')
+  }, [setUser, router])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -102,14 +110,27 @@ export default function GlobalNav() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-              size="icon"
-              variant="outline"
-              aria-label={t('AriaLabel.UserInfo')}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
-            >
-              <CircleUser className="!size-6" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  aria-label={t('AriaLabel.UserInfo')}
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
+                >
+                  <CircleUser className="!size-6" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  className="justify-between hover:bg-opacity-90"
+                  onClick={handleSignOut}
+                >
+                  <span>{t('AriaLabel.SignOut')}</span>
+                  <LogOut className="size-4" />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
       </header>

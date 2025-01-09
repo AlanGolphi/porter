@@ -12,6 +12,7 @@ import { db } from '@/lib/db'
 import { getUser } from '@/lib/db/queries'
 import { randomBytes } from 'crypto'
 import { getLocale, getTranslations } from 'next-intl/server'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { Resend } from 'resend'
@@ -104,6 +105,11 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   redirect('/post-sign-up')
 })
+
+export const signOut = async () => {
+  const cookieStore = await cookies()
+  cookieStore.delete('session')
+}
 
 export const resendEmail = async (formData: FormData) => {
   const t = await getTranslations('PostSignUpPage')

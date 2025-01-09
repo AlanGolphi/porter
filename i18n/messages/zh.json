@@ -30,7 +30,8 @@
     "AriaLabel": {
       "ToggleTheme": "切换主题",
       "ToggleLanguage": "切换语言",
-      "UserInfo": "用户信息"
+      "UserInfo": "用户信息",
+      "SignOut": "退出登录"
     },
     "Nav": {
       "home": "首页",
