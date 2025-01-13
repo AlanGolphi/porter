@@ -28,6 +28,7 @@
   },
   "UploadPage": {
     "AriaLabel": {
+      "Menu": "菜单",
       "ToggleTheme": "切换主题",
       "ToggleLanguage": "切换语言",
       "UserInfo": "用户信息",

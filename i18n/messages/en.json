@@ -28,6 +28,7 @@
   },
   "UploadPage": {
     "AriaLabel": {
+      "Menu": "Menu",
       "ToggleTheme": "Toggle theme",
       "ToggleLanguage": "Toggle language",
       "UserInfo": "User info",

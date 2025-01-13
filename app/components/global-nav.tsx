@@ -6,6 +6,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUser } from '@/lib/auth'
@@ -24,7 +27,7 @@ export default function GlobalNav() {
   const { theme, setTheme } = useTheme()
   const router = useRouter()
   const t = useTranslations('UploadPage')
-  const { setUser } = useUser()
+  const { user, setUser } = useUser()
   const handleToggleTheme = useCallback(() => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }, [theme, setTheme])
@@ -60,7 +63,54 @@ export default function GlobalNav() {
             <Image src={Logo} alt="Logo" width={48} height={48} className="h-12 w-12" />
             <span className="text-lg font-bold">porter</span>
           </Link>
-          <Menu className="!size-6" />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Menu className="!size-6 cursor-pointer" aria-label={t('AriaLabel.Menu')} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                className="justify-start hover:bg-opacity-90"
+                onClick={handleToggleTheme}
+                aria-label={t('AriaLabel.ToggleTheme')}
+              >
+                <Moon className="hidden !size-4 dark:block" />
+                <Sun className="block !size-4 dark:hidden" />
+                <span>{t('AriaLabel.ToggleTheme')}</span>
+              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger aria-label={t('AriaLabel.ToggleLanguage')}>
+                  <Languages className="!size-4" />
+                  <span>{t('AriaLabel.ToggleLanguage')}</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    className="justify-between hover:bg-opacity-90"
+                    onClick={() => handleToggleLanguage('en')}
+                  >
+                    <span>English</span>
+                    <Check className={cn('hidden', locale === 'en' && 'block size-4')} />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="justify-between hover:bg-opacity-90"
+                    onClick={() => handleToggleLanguage('zh')}
+                  >
+                    <span>中文</span>
+                    <Check className={cn('hidden', locale === 'zh' && 'block size-4')} />
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              {user && (
+                <DropdownMenuItem
+                  className="justify-start hover:bg-opacity-90"
+                  onClick={handleSignOut}
+                  aria-label={t('AriaLabel.SignOut')}
+                >
+                  <LogOut className="size-4" />
+                  <span>{t('AriaLabel.SignOut')}</span>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
@@ -110,27 +160,29 @@ export default function GlobalNav() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  aria-label={t('AriaLabel.UserInfo')}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
-                >
-                  <CircleUser className="!size-6" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  className="justify-between hover:bg-opacity-90"
-                  onClick={handleSignOut}
-                >
-                  <span>{t('AriaLabel.SignOut')}</span>
-                  <LogOut className="size-4" />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    aria-label={t('AriaLabel.UserInfo')}
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-slate-950"
+                  >
+                    <CircleUser className="!size-6" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    className="justify-between hover:bg-opacity-90"
+                    onClick={handleSignOut}
+                  >
+                    <span>{t('AriaLabel.SignOut')}</span>
+                    <LogOut className="size-4" />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </nav>
         </div>
       </header>
