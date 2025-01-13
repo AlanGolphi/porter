@@ -23,12 +23,12 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   )
 
   return (
-    <div className="flex min-h-[calc(100dvh-2rem)] w-full flex-col justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-[calc(100dvh-2rem)] w-full flex-col justify-center bg-backgroundMud px-4 py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <CircleIcon className="h-12 w-12 text-orange-500" />
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           {mode === 'signin' ? t('SignInToYourAccount') : t('CreateYourAccount')}
         </h2>
       </div>
@@ -40,7 +40,10 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <input type="hidden" name="inviteId" value={inviteId || ''} />
           {mode === 'signup' && (
             <div>
-              <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-white"
+              >
                 {t('Name')}
               </Label>
               <div className="mt-1">
@@ -59,7 +62,10 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           )}
 
           <div>
-            <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
               {t('Email')}
             </Label>
             <div className="mt-1">
@@ -77,7 +83,10 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           </div>
 
           <div>
-            <Label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
               {t('Password')}
             </Label>
             <div className="mt-1">
@@ -123,7 +132,7 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-gray-50 px-2 text-gray-500">
+              <span className="bg-gray-50 px-2 text-gray-500 dark:bg-backgroundMud dark:text-gray-300">
                 {mode === 'signin' ? t('NewToPlatform') : t('AlreadyHaveAccount')}
               </span>
             </div>
