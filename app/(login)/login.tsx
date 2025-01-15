@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ActionState } from '@/lib/auth/middleware'
-import { CircleIcon, Loader2 } from 'lucide-react'
+import { CloudOff, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -25,8 +25,26 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   return (
     <div className="flex min-h-[calc(100dvh-2rem)] w-full flex-col justify-center bg-backgroundMud px-4 py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <CircleIcon className="h-12 w-12 text-orange-500" />
+        <div className="flex items-center justify-evenly">
+          <div className="relative h-12 w-12">
+            {Array.from({ length: Math.floor(Math.random() * 5) + 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute text-2xl"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
+                📦
+              </div>
+            ))}
+          </div>
+          <div className="relative flex h-24 w-24 items-center justify-center">
+            <CloudOff className="absolute left-0 top-0 h-full w-full text-card-mud" />
+            <span className="z-10 text-6xl">🤷🏻‍♂️</span>
+          </div>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           {mode === 'signin' ? t('SignInToYourAccount') : t('CreateYourAccount')}
