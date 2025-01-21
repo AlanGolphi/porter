@@ -65,7 +65,11 @@ export default function GlobalNav() {
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Menu className="!size-6 cursor-pointer" aria-label={t('AriaLabel.Menu')} />
+              <Menu
+                className="!size-6 cursor-pointer"
+                role="button"
+                aria-label={t('AriaLabel.Menu')}
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem

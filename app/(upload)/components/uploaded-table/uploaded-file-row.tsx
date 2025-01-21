@@ -112,7 +112,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
             e.preventDefault()
             clickToCopy(file.url)
           }}
-          className="truncate text-nowrap text-blue-500 hover:text-blue-700"
+          className="truncate text-nowrap text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
         >
           {truncateUrl(file.url)}
         </a>
