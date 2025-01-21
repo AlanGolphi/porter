@@ -1,4 +1,8 @@
 {
+  "Meta": {
+    "Title": "Porter",
+    "Description": "将文件上传到云端！"
+  },
   "LoginPage": {
     "Loading": "加载中...",
     "SignInToYourAccount": "登录您的账号",

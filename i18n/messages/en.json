@@ -1,4 +1,8 @@
 {
+  "Meta": {
+    "Title": "Porter",
+    "Description": "Port your files to the cloud!"
+  },
   "LoginPage": {
     "Loading": "Loading...",
     "SignInToYourAccount": "Sign in to your account",
