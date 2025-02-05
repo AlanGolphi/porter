@@ -3,12 +3,14 @@
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { QrCode } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import * as QRCode from 'qrcode'
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 
 export function QRCodePopover({ str }: { str: string }) {
+  const t = useTranslations('UploadPage.CopyResult')
   const [open, setOpen] = useState(false)
   const [dataUrl, setDataUrl] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
@@ -33,10 +35,11 @@ export function QRCodePopover({ str }: { str: string }) {
 
       const clipboardItem = new ClipboardItem({ [blob.type]: blob })
       await navigator.clipboard.write([clipboardItem])
+      toast.success(t('CopyQrCodeSuccess'))
     } catch {
-      toast.error('Failed to copy to clipboard')
+      toast.error(t('CopyQrCodeFailed'))
     }
-  }, [dataUrl])
+  }, [dataUrl, t])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

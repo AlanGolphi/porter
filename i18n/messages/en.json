@@ -47,6 +47,12 @@
     "Upload": {
       "DragDrop": "Drag & Drop / Select Files",
       "NoFilesUploaded": "No files uploaded yet"
+    },
+    "CopyResult": {
+      "CopyUrlSuccess": "Url copied to clipboard",
+      "CopyUrlFailed": "Failed to copy url to clipboard",
+      "CopyQrCodeSuccess": "QrCode copied to clipboard",
+      "CopyQrCodeFailed": "Failed to copy QrCode to clipboard"
     }
   },
   "VerifyPage": {

@@ -47,6 +47,12 @@
     "Upload": {
       "DragDrop": "拖拽文件或点击选择",
       "NoFilesUploaded": "暂无已上传文件"
+    },
+    "CopyResult": {
+      "CopyUrlSuccess": "链接已复制到剪贴板",
+      "CopyUrlFailed": "复制链接失败",
+      "CopyQrCodeSuccess": "二维码已复制到剪贴板",
+      "CopyQrCodeFailed": "复制二维码失败"
     }
   },
   "VerifyPage": {

@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { UploadedFile } from '@prisma/client'
 import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
@@ -20,6 +21,7 @@ interface UploadedFileRowProps {
 }
 
 export function UploadedFileRow({ file }: UploadedFileRowProps) {
+  const t = useTranslations('UploadPage.CopyResult')
   const truncateFilename = useCallback((filename: string, maxLength: number = 20): string => {
     if (filename.length <= maxLength) return filename
 
@@ -72,9 +74,9 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
   const clickToCopy = useCallback(async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-      toast.success('Copied to clipboard')
+      toast.success(t('CopyUrlSuccess'))
     } catch {
-      toast.error('Failed to copy')
+      toast.error(t('CopyUrlFailed'))
     }
   }, [])
 
