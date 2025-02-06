@@ -71,14 +71,17 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
     return `${start}...${end}`
   }, [])
 
-  const clickToCopy = useCallback(async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text)
-      toast.success(t('CopyUrlSuccess'))
-    } catch {
-      toast.error(t('CopyUrlFailed'))
-    }
-  }, [])
+  const clickToCopy = useCallback(
+    async (text: string) => {
+      try {
+        await navigator.clipboard.writeText(text)
+        toast.success(t('CopyUrlSuccess'))
+      } catch {
+        toast.error(t('CopyUrlFailed'))
+      }
+    },
+    [t],
+  )
 
   const getIcon = useCallback((mimeType: string) => {
     if (mimeType.startsWith('image/')) {

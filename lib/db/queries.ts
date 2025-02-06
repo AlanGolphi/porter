@@ -27,7 +27,7 @@ export const getFileByHash = async (hash: string) => {
   }
 
   const file = await db.uploadedFile.findFirst({
-    where: { userId: user.id, OR: [{ hash }, { hash: null }] },
+    where: { userId: user.id, hash },
   })
   return file
 }
