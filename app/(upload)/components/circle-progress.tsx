@@ -24,12 +24,14 @@ export function CircleProgress({
   // Outer ring radius
   const outerRadius = (size - strokeWidth) / 2
   // Inner ring radius (slightly smaller)
-  const innerRadius = outerRadius - (strokeWidth * 1.5)
-  
+  const innerRadius = outerRadius - strokeWidth * 1.5
+
   const outerCircumference = 2 * Math.PI * outerRadius
   const innerCircumference = 2 * Math.PI * innerRadius
-  const outerStrokeDashoffset = outerCircumference - (normalizedOuterProgress / 100) * outerCircumference
-  const innerStrokeDashoffset = innerCircumference - (normalizedInnerProgress / 100) * innerCircumference
+  const outerStrokeDashoffset =
+    outerCircumference - (normalizedOuterProgress / 100) * outerCircumference
+  const innerStrokeDashoffset =
+    innerCircumference - (normalizedInnerProgress / 100) * innerCircumference
 
   return (
     <div className={cn('relative inline-flex', className)}>
@@ -59,7 +61,7 @@ export function CircleProgress({
           strokeWidth={strokeWidth}
           strokeDasharray={outerCircumference}
           strokeDashoffset={outerStrokeDashoffset}
-          className="text-primary opacity-30"
+          className="text-primary"
         />
         {/* Inner ring background */}
         <circle

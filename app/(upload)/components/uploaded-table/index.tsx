@@ -1,5 +1,4 @@
-import { db } from '@/lib/db'
-import { getUser } from '@/lib/db/queries'
+import { getUser, getUserUploadedFiles } from '@/lib/db/queries'
 import { UploadedFile } from '@prisma/client'
 import { PackageOpen } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
@@ -20,14 +19,7 @@ export default async function UploadedTable({ page }: { page: number }) {
   if (!user) {
     redirect('/sign-in')
   }
-  const files: UploadedFile[] = await db.uploadedFile.findMany({
-    where: {
-      userId: user.id,
-    },
-    orderBy: { createdAt: 'desc' },
-    take: 10,
-    skip: (page - 1) * 10,
-  })
+  const files: UploadedFile[] = await getUserUploadedFiles(page, 10)
 
   return (
     <div className="flex w-full basis-2/3 flex-col rounded-2xl bg-card-mud p-4 lg:h-full lg:w-auto lg:min-w-0">

@@ -46,13 +46,19 @@
     },
     "Upload": {
       "DragDrop": "Drag & Drop / Select Files",
-      "NoFilesUploaded": "No files uploaded yet"
+      "NoFilesUploaded": "No files uploaded yet",
+      "StorageQuotaExceeded": "Storage quota exceeded"
     },
     "CopyResult": {
       "CopyUrlSuccess": "Url copied to clipboard",
       "CopyUrlFailed": "Failed to copy url to clipboard",
       "CopyQrCodeSuccess": "QrCode copied to clipboard",
       "CopyQrCodeFailed": "Failed to copy QrCode to clipboard"
+    },
+    "Delete": {
+      "FileNotFound": "File not found",
+      "Success": "File deleted",
+      "Failed": "Failed to delete file"
     }
   },
   "VerifyPage": {

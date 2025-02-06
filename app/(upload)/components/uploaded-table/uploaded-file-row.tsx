@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { deleteFileFromDb } from '@/lib/db/queries'
 import { UploadedFile } from '@prisma/client'
 import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -93,6 +94,15 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
     }
   }, [])
 
+  const handleDelete = async () => {
+    const deleteResult = await deleteFileFromDb(file.id)
+    if (deleteResult.success) {
+      toast.success(deleteResult.data as string)
+    } else {
+      toast.error(deleteResult.error)
+    }
+  }
+
   return (
     <article
       key={file.id}
@@ -124,7 +134,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       </div>
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
         <QrCodePopover str={file.url} />
-        <Button variant="destructive" size="sm" aria-label="Delete">
+        <Button variant="destructive" size="sm" aria-label="Delete" onClick={handleDelete}>
           <Trash2 className="h-4 w-4 text-white" />
         </Button>
       </div>
