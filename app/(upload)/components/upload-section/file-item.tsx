@@ -3,14 +3,14 @@
 import { Button } from '@/components/ui/button'
 import { getFileByHash, storeFile } from '@/lib/db/queries'
 import { getTempAccessCredentials } from '@/lib/r2/queries'
-import { calculateRequiredTTL } from '@/lib/utils'
+import { calculateRequiredTTL, truncateFilename } from '@/lib/utils'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
 import { UploadedFile } from '@prisma/client'
-import { FileIcon, TrashIcon } from 'lucide-react'
+import { ArrowBigDown, FileIcon, TrashIcon } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { FileItemInfo } from '../upload-section'
 import { CircleProgress } from './circle-progress'
-import { FileItemInfo } from './upload-section'
 
 const BUCKET = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BUCKET!
 const DOMAIN = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_DOMAIN!
@@ -166,10 +166,26 @@ export default function FileItem({
     [id, uploadFile, THRESHOLD_FILE_SIZE, oneTimeUpload, multipartUpload],
   )
 
+  const renderStatus = () => {
+    console.log(findedFile?.filename)
+    switch (status) {
+      case 'init':
+        return <p>init...</p>
+      case 'hashing':
+      case 'finding':
+      case 'uploading':
+        return <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />
+      case 'finded':
+        return <ArrowBigDown className="h-6 w-6 translate-y-6 animate-bounce" strokeWidth={1.5} />
+    }
+  }
+
   useEffect(() => {
     if (typeof window === 'undefined' || hashedRef.current || !uploadFile) return
     try {
-      workerRef.current = new Worker(new URL('../../../lib/workers/file-hash.ts', import.meta.url))
+      workerRef.current = new Worker(
+        new URL('../../../../lib/workers/file-hash.ts', import.meta.url),
+      )
     } catch (err) {
       startUpload()
       console.error('Worker creation failed:', err)
@@ -206,21 +222,19 @@ export default function FileItem({
   }, [uploadFile, startUpload])
 
   return (
-    <div className="relative flex h-auto w-full items-center justify-between rounded-lg bg-card-mud p-4 transition-all hover:opacity-60">
-      <div className="flex items-center gap-2">
-        <FileIcon className="h-6 w-6" />
-        <p className="text-sm">{fileItem.filename}</p>
+    <div className="relative flex h-auto w-full flex-col items-center rounded-lg bg-card-mud p-4 transition-all hover:opacity-60">
+      <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex items-center justify-start gap-2">
+          <FileIcon className="h-6 w-6" />
+          <p className="text-sm">{truncateFilename(fileItem.filename)}</p>
+        </div>
+        <div className="flex items-center justify-end gap-2">
+          {renderStatus()}
+          <Button variant="ghost" size="icon" onClick={() => handleRemoveFile(fileItem.id)}>
+            <TrashIcon className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
-
-      {(status === 'hashing' || status === 'uploading') && (
-        <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />
-      )}
-      {status}
-      {status === 'finded' && <p>File already exists {findedFile?.filename}</p>}
-
-      <Button variant="ghost" size="icon" onClick={() => handleRemoveFile(fileItem.id)}>
-        <TrashIcon className="h-6 w-6" />
-      </Button>
     </div>
   )
 }

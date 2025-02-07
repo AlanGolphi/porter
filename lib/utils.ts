@@ -28,3 +28,24 @@ export function getLocaleFromCookie(cookie: string) {
   const locale = localeCookie.split('=')[1]
   return locale || 'en'
 }
+
+export const truncateFilename = (filename: string, maxLength: number = 20): string => {
+  if (filename.length <= maxLength) return filename
+
+  const lastDotIndex = filename.lastIndexOf('.')
+  if (lastDotIndex === -1) {
+    const halfLength = Math.floor((maxLength - 3) / 2)
+    return `${filename.slice(0, halfLength)}...${filename.slice(-halfLength)}`
+  }
+
+  const extension = filename.slice(lastDotIndex)
+  const nameWithoutExt = filename.slice(0, lastDotIndex)
+  const availableLength = maxLength - extension.length - 3 // 3 for the ellipsis
+
+  if (availableLength <= 0) {
+    return filename // If extension is too long, show full filename
+  }
+
+  const halfLength = Math.floor(availableLength / 2)
+  return `${nameWithoutExt.slice(0, halfLength)}...${nameWithoutExt.slice(-halfLength)}${extension}`
+}

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useUser } from '@/lib/auth'
 import { useEffect, useRef, useState } from 'react'
-import { CircleProgress } from '../(upload)/components/circle-progress'
+import { CircleProgress } from '../(upload)/components/upload-section/circle-progress'
 
 export default function TestWorker() {
   const { user } = useUser()
