@@ -45,6 +45,14 @@ export default function UploadSection() {
     }
   }, [])
 
+  const handleRetry = useCallback((id: string, file: FileItemInfo) => {
+    const newFileItem = {
+      ...file,
+      id: `${getCurrentDateTag()}-${nanoid(10)}`,
+    }
+    setFiles((prev) => [...prev.filter((file) => file.id !== id), newFileItem])
+  }, [])
+
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       processFiles(e.target.files)
@@ -83,7 +91,12 @@ export default function UploadSection() {
       className={`relative flex w-full basis-1/3 flex-col gap-2 overflow-hidden ${files.length > 0 ? 'pb-20' : ''} lg:h-full lg:w-auto lg:min-w-0`}
     >
       {files.map((file) => (
-        <FileItem key={file.id} fileItem={file} handleRemoveFile={handleRemoveFile} />
+        <FileItem
+          key={file.id}
+          fileItem={file}
+          handleRemoveFile={handleRemoveFile}
+          handleRetry={handleRetry}
+        />
       ))}
 
       <div

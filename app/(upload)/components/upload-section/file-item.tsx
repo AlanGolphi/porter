@@ -7,10 +7,20 @@ import { calculateRequiredTTL, truncateFilename } from '@/lib/utils'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
 import { UploadedFile } from '@prisma/client'
-import { ArrowBigDown, FileIcon, TrashIcon } from 'lucide-react'
+import { ArrowBigDown, FileIcon, QrCode, RefreshCcw, TrashIcon } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { CopyableFileUrl } from '../copyable-file-url'
 import { FileItemInfo } from '../upload-section'
 import { CircleProgress } from './circle-progress'
+
+const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
+  loading: () => (
+    <Button variant="outline" className="border-none" aria-label="QR Code" size="icon">
+      <QrCode className="h-6 w-6" />
+    </Button>
+  ),
+})
 
 const BUCKET = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BUCKET!
 const DOMAIN = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_DOMAIN!
@@ -30,9 +40,11 @@ const generateS3Client = (credentials: TempCredentials) =>
 export default function FileItem({
   fileItem,
   handleRemoveFile,
+  handleRetry,
 }: {
   fileItem: FileItemInfo
   handleRemoveFile: (id: string) => void
+  handleRetry: (id: string, file: FileItemInfo) => void
 }) {
   const THRESHOLD_FILE_SIZE = 1024 * 1024 * 5 // 5MB
 
@@ -43,6 +55,7 @@ export default function FileItem({
   const [hashProgress, setHashProgress] = useState(0)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [findedFile, setFindedFile] = useState<UploadedFile>()
+  const [storedFile, setStoredFile] = useState<UploadedFile>()
 
   const { id, file: uploadFile } = fileItem
 
@@ -77,6 +90,7 @@ export default function FileItem({
         console.log('upload result: ', result)
         console.log('storedFile: ', storedFile)
         setStatus('done')
+        setStoredFile(storedFile)
       } catch (error) {
         setStatus('error')
         console.error('Failed to upload file:', error)
@@ -126,6 +140,7 @@ export default function FileItem({
         })
         console.log('storedFile: ', storedFile)
         setStatus('done')
+        setStoredFile(storedFile)
       } catch (error) {
         setStatus('error')
         console.error('Failed to upload file:', error)
@@ -176,8 +191,34 @@ export default function FileItem({
       case 'uploading':
         return <CircleProgress innerProgress={hashProgress} outerProgress={uploadProgress} />
       case 'finded':
-        return <ArrowBigDown className="h-6 w-6 translate-y-6 animate-bounce" strokeWidth={1.5} />
+      case 'done':
+        return <ArrowBigDown className="mt-3 h-6 w-6 animate-bounce" strokeWidth={1.5} />
+      case 'error':
+        return (
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="retry"
+            onClick={() => handleRetry(id, fileItem)}
+          >
+            <RefreshCcw className="h-6 w-6 text-red-700 dark:text-red-400" strokeWidth={1.5} />
+          </Button>
+        )
     }
+  }
+
+  const renderFilePreview = () => {
+    const url = status === 'finded' ? findedFile?.url : storedFile?.url
+    const fileSize = status === 'finded' ? findedFile?.size : storedFile?.size
+
+    if (!url || !fileSize) return null
+
+    return (
+      <>
+        <CopyableFileUrl url={url} fileSize={fileSize} />
+        <QrCodePopover str={url} />
+      </>
+    )
   }
 
   useEffect(() => {
@@ -222,19 +263,29 @@ export default function FileItem({
   }, [uploadFile, startUpload])
 
   return (
-    <div className="relative flex h-auto w-full flex-col items-center rounded-lg bg-card-mud p-4 transition-all hover:opacity-60">
-      <div className="flex w-full items-center justify-between gap-2">
+    <div className="relative flex h-auto w-full flex-col items-center rounded-lg bg-card-mud p-4 transition-all">
+      <div className="flex w-full items-center justify-between">
         <div className="flex items-center justify-start gap-2">
           <FileIcon className="h-6 w-6" />
           <p className="text-sm">{truncateFilename(fileItem.filename)}</p>
         </div>
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end">
           {renderStatus()}
-          <Button variant="ghost" size="icon" onClick={() => handleRemoveFile(fileItem.id)}>
+          <Button
+            size="icon"
+            variant="ghost"
+            aria-label="remove file"
+            onClick={() => handleRemoveFile(fileItem.id)}
+          >
             <TrashIcon className="h-6 w-6" />
           </Button>
         </div>
       </div>
+      {['done', 'finded'].includes(status) && (
+        <div className="flex w-full items-center justify-between rounded-lg bg-background p-1 px-2">
+          {renderFilePreview()}
+        </div>
+      )}
     </div>
   )
 }

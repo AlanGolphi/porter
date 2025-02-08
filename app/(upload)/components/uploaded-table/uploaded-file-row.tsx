@@ -5,10 +5,10 @@ import { deleteFileFromDb } from '@/lib/db/queries'
 import { truncateFilename } from '@/lib/utils'
 import { UploadedFile } from '@prisma/client'
 import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
+import { CopyableFileUrl } from '../copyable-file-url'
 
 const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
   loading: () => (
@@ -23,48 +23,6 @@ interface UploadedFileRowProps {
 }
 
 export function UploadedFileRow({ file }: UploadedFileRowProps) {
-  const t = useTranslations('UploadPage.CopyResult')
-
-  const formatFileSize = useCallback((bs: bigint): string => {
-    const bytes = Number(bs)
-    const KB = 1024
-    const MB = KB * 1024
-    const GB = MB * 1024
-    const TB = GB * 1024
-
-    if (bytes < KB) {
-      return `${bytes} B`
-    } else if (bytes < MB) {
-      return `${(bytes / KB).toFixed(1)} KB`
-    } else if (bytes < GB) {
-      return `${(bytes / MB).toFixed(1)} MB`
-    } else if (bytes < TB) {
-      return `${(bytes / GB).toFixed(1)} GB`
-    } else {
-      return `${(bytes / TB).toFixed(1)} TB`
-    }
-  }, [])
-
-  const truncateUrl = useCallback((url: string, maxLength: number = 20): string => {
-    if (url.length <= maxLength) return url
-
-    const start = url.substring(0, 10)
-    const end = url.substring(url.length - 6)
-    return `${start}...${end}`
-  }, [])
-
-  const clickToCopy = useCallback(
-    async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text)
-        toast.success(t('CopyUrlSuccess'))
-      } catch {
-        toast.error(t('CopyUrlFailed'))
-      }
-    },
-    [t],
-  )
-
   const getIcon = useCallback((mimeType: string) => {
     if (mimeType.startsWith('image/')) {
       return <Image className="h-6 w-6" />
@@ -96,23 +54,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       >
         {truncateFilename(file.filename)}
       </div>
-      <div
-        className="flex basis-1/4 items-center justify-center text-center"
-        title={`size: ${formatFileSize(file.size)}`}
-      >
-        <a
-          href={file.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => {
-            e.preventDefault()
-            clickToCopy(file.url)
-          }}
-          className="truncate text-nowrap text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
-        >
-          {truncateUrl(file.url)}
-        </a>
-      </div>
+      <CopyableFileUrl url={file.url} fileSize={file.size} />
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
         <QrCodePopover str={file.url} />
         <Button variant="destructive" size="sm" aria-label="Delete" onClick={handleDelete}>
