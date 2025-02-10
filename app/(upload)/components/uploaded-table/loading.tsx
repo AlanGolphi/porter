@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import { TableHeader } from './table-header'
 
 export function UploadedFileRowLoading() {
   return (
@@ -23,14 +24,7 @@ export function UploadedFileRowLoading() {
 export function Loading() {
   return (
     <div className="flex w-full basis-2/3 flex-col rounded-2xl bg-card-mud p-4 lg:h-full">
-      <header className="flex w-full border-b p-2">
-        <nav className="flex w-full justify-between">
-          <span className="basis-1/6 text-center">Type</span>
-          <span className="basis-1/4 text-center">Filename</span>
-          <span className="basis-1/4 text-center">URL</span>
-          <span className="basis-1/6 text-center">Action</span>
-        </nav>
-      </header>
+      <TableHeader />
       <div className="flex w-full basis-2/3 flex-col items-center justify-start">
         {[...Array(6)].map((_, i) => (
           <UploadedFileRowLoading key={i} />
