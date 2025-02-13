@@ -47,11 +47,8 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       key={file.id}
       className="flex h-14 w-full justify-between border-b p-2 last:border-none hover:bg-card-mud/70"
     >
-      <div className="flex basis-1/6 items-center justify-center">{getIcon(file.mimeType)}</div>
-      <div
-        className="flex basis-1/4 items-center justify-center truncate text-nowrap"
-        title={file.filename}
-      >
+      <div className="hidden items-center justify-center sm:flex">{getIcon(file.mimeType)}</div>
+      <div className="flex basis-1/4 items-center justify-center text-nowrap" title={file.filename}>
         {truncateFilename(file.filename)}
       </div>
       <CopyableFileUrl url={file.url} fileSize={file.size} />

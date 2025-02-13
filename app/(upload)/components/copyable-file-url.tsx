@@ -63,7 +63,7 @@ export function CopyableFileUrl({ url, fileSize, maxLength = 20 }: CopyableFileU
           e.preventDefault()
           clickToCopy(url)
         }}
-        className="text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
+        className="text-nowrap text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
       >
         {truncateFilename(renderUrl, maxLength)}
       </a>
