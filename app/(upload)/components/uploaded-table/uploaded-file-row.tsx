@@ -45,13 +45,15 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
   return (
     <article
       key={file.id}
-      className="flex h-14 w-full justify-between border-b p-2 last:border-none hover:bg-card-mud/70"
+      className="flex w-full justify-between border-b p-2 @container last:border-none hover:bg-card-mud/70"
     >
       <div className="hidden items-center justify-center sm:flex">{getIcon(file.mimeType)}</div>
-      <div className="flex basis-1/4 items-center justify-center text-nowrap" title={file.filename}>
-        {truncateFilename(file.filename)}
+      <div className="flex flex-col items-start @sm:w-full @sm:flex-row @sm:items-center @sm:justify-evenly">
+        <div className="flex items-center justify-center text-nowrap" title={file.filename}>
+          {truncateFilename(file.filename)}
+        </div>
+        <CopyableFileUrl url={file.url} fileSize={file.size} />
       </div>
-      <CopyableFileUrl url={file.url} fileSize={file.size} />
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
         <QrCodePopover str={file.url} />
         <Button variant="destructive" size="sm" aria-label="Delete" onClick={handleDelete}>

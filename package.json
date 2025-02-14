@@ -47,6 +47,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
     "@types/node": "^20.17.6",
     "@types/qrcode": "^1.5.5",
     "@types/react": "19.0.2",
