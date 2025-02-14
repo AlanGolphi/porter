@@ -10,7 +10,7 @@ import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 
 export function QRCodePopover({ str }: { str: string }) {
-  const t = useTranslations('UploadPage.CopyResult')
+  const t = useTranslations('UploadPage')
   const [open, setOpen] = useState(false)
   const [dataUrl, setDataUrl] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
@@ -35,9 +35,9 @@ export function QRCodePopover({ str }: { str: string }) {
 
       const clipboardItem = new ClipboardItem({ [blob.type]: blob })
       await navigator.clipboard.write([clipboardItem])
-      toast.success(t('CopyQrCodeSuccess'))
+      toast.success(t('Copy.CopyQrCodeSuccess'))
     } catch {
-      toast.error(t('CopyQrCodeFailed'))
+      toast.error(t('Copy.CopyQrCodeFailed'))
     }
   }, [dataUrl, t])
 
@@ -47,7 +47,7 @@ export function QRCodePopover({ str }: { str: string }) {
         <Button
           size="icon"
           variant="outline"
-          aria-label="QR Code"
+          aria-label={t('AriaLabel.QrCode')}
           className="border-none"
           onClick={generateQrCode}
         >
@@ -62,12 +62,14 @@ export function QRCodePopover({ str }: { str: string }) {
         ) : (
           <QrCode className="h-44 w-44 animate-pulse" />
         )}
-        <span
+        <button
           onClick={copyToClipboard}
-          className={`cursor-pointer text-sm text-blue-500 hover:text-blue-400 hover:underline ${error || !dataUrl ? 'cursor-not-allowed text-blue-300' : ''}`}
+          disabled={error || !dataUrl}
+          aria-label={t('Copy.CopyQrCode')}
+          className={`text-sm text-blue-500 hover:text-blue-400 hover:underline disabled:cursor-not-allowed disabled:text-blue-300`}
         >
-          copy
-        </span>
+          {t('Copy.CopyQrCode')}
+        </button>
       </PopoverContent>
     </Popover>
   )

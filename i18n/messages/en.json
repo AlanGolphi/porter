@@ -36,7 +36,9 @@
       "ToggleTheme": "Toggle theme",
       "ToggleLanguage": "Toggle language",
       "UserInfo": "User info",
-      "SignOut": "Sign out"
+      "SignOut": "Sign out",
+      "Delete": "Delete",
+      "QrCode": "QrCode"
     },
     "Nav": {
       "home": "Home",
@@ -49,7 +51,15 @@
       "NoFilesUploaded": "No files uploaded yet",
       "StorageQuotaExceeded": "Storage quota exceeded"
     },
-    "CopyResult": {
+    "UploadedTable": {
+      "Type": "Type",
+      "Filename": "Filename",
+      "Url": "URL",
+      "Actions": "Actions"
+    },
+    "Copy": {
+      "CopyUrl": "Copy URL",
+      "CopyQrCode": "Copy QrCode",
       "CopyUrlSuccess": "Url copied to clipboard",
       "CopyUrlFailed": "Failed to copy url to clipboard",
       "CopyQrCodeSuccess": "QrCode copied to clipboard",

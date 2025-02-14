@@ -36,7 +36,9 @@
       "ToggleTheme": "切换主题",
       "ToggleLanguage": "切换语言",
       "UserInfo": "用户信息",
-      "SignOut": "退出登录"
+      "SignOut": "退出登录",
+      "Delete": "删除",
+      "QrCode": "二维码"
     },
     "Nav": {
       "home": "首页",
@@ -49,7 +51,15 @@
       "NoFilesUploaded": "暂无已上传文件",
       "StorageQuotaExceeded": "存储空间不足"
     },
-    "CopyResult": {
+    "UploadedTable": {
+      "Type": "类型",
+      "Filename": "文件名",
+      "Url": "链接",
+      "Actions": "操作"
+    },
+    "Copy": {
+      "CopyUrl": "复制链接",
+      "CopyQrCode": "复制二维码",
       "CopyUrlSuccess": "链接已复制到剪贴板",
       "CopyUrlFailed": "复制链接失败",
       "CopyQrCodeSuccess": "二维码已复制到剪贴板",

@@ -12,7 +12,7 @@ interface CopyableFileUrlProps {
 }
 
 export function CopyableFileUrl({ url, fileSize, maxLength = 20 }: CopyableFileUrlProps) {
-  const t = useTranslations('UploadPage.CopyResult')
+  const t = useTranslations('UploadPage.Copy')
   const urlObject = new URL(url)
   const renderUrl = urlObject.pathname.split('/').pop() || ''
 

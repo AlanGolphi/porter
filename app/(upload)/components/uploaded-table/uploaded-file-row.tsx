@@ -5,6 +5,7 @@ import { deleteFileFromDb } from '@/lib/db/queries'
 import { truncateFilename } from '@/lib/utils'
 import { UploadedFile } from '@prisma/client'
 import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
@@ -12,7 +13,7 @@ import { CopyableFileUrl } from '../copyable-file-url'
 
 const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
   loading: () => (
-    <Button variant="outline" className="border-none" aria-label="QR Code" size="icon">
+    <Button variant="outline" className="border-none" size="icon">
       <QrCode className="h-6 w-6" />
     </Button>
   ),
@@ -23,6 +24,8 @@ interface UploadedFileRowProps {
 }
 
 export function UploadedFileRow({ file }: UploadedFileRowProps) {
+  const t = useTranslations('UploadPage.AriaLabel')
+
   const getIcon = useCallback((mimeType: string) => {
     if (mimeType.startsWith('image/')) {
       return <Image className="h-6 w-6" />
@@ -56,7 +59,7 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       </div>
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
         <QrCodePopover str={file.url} />
-        <Button variant="destructive" size="sm" aria-label="Delete" onClick={handleDelete}>
+        <Button variant="destructive" size="sm" aria-label={t('Delete')} onClick={handleDelete}>
           <Trash2 className="h-4 w-4 text-white" />
         </Button>
       </div>
