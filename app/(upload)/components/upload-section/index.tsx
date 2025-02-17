@@ -88,23 +88,25 @@ export default function UploadSection() {
 
   return (
     <section
-      className={`relative flex w-full basis-1/3 flex-col gap-2 overflow-hidden ${files.length > 0 ? 'pb-20' : ''} lg:h-full lg:w-auto lg:min-w-0`}
+      className={`relative flex w-full basis-1/3 flex-col overflow-hidden ${files.length > 0 ? 'pb-12' : ''} lg:h-full lg:w-auto lg:min-w-0`}
     >
-      {files.map((file) => (
-        <FileItem
-          key={file.id}
-          fileItem={file}
-          handleRemoveFile={handleRemoveFile}
-          handleRetry={handleRetry}
-        />
-      ))}
+      <div className="flex w-full flex-col gap-2 overflow-y-scroll">
+        {files.map((file) => (
+          <FileItem
+            key={file.id}
+            fileItem={file}
+            handleRemoveFile={handleRemoveFile}
+            handleRetry={handleRetry}
+          />
+        ))}
+      </div>
 
       <div
         onClick={() => inputRef.current?.click()}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-card-mud p-4 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-200' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
+        className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-card-mud p-2 transition-all duration-300 ${isDraggingOver ? 'border-2 border-dashed border-blue-500 bg-blue-200' : 'hover:opacity-60'} ${files.length > 0 ? 'absolute bottom-0' : 'basis-full'}`}
       >
         <Input
           ref={inputRef}

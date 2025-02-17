@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button'
 import { deleteFileFromDb } from '@/lib/db/queries'
 import { truncateFilename } from '@/lib/utils'
 import { UploadedFile } from '@prisma/client'
-import { FileText, FileVideo, Image, QrCode, Trash2 } from 'lucide-react'
+import { QrCode, Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import dynamic from 'next/dynamic'
-import { useCallback } from 'react'
 import { toast } from 'sonner'
 import { CopyableFileUrl } from '../copyable-file-url'
+import RenderFileIcon from '../render-file-icon'
 
 const QrCodePopover = dynamic(() => import('../qrcode-popover').then((mod) => mod.QRCodePopover), {
   loading: () => (
@@ -26,16 +26,6 @@ interface UploadedFileRowProps {
 export function UploadedFileRow({ file }: UploadedFileRowProps) {
   const t = useTranslations('UploadPage.AriaLabel')
 
-  const getIcon = useCallback((mimeType: string) => {
-    if (mimeType.startsWith('image/')) {
-      return <Image className="h-6 w-6" />
-    } else if (mimeType.startsWith('video/')) {
-      return <FileVideo className="h-6 w-6" />
-    } else {
-      return <FileText className="h-6 w-6" />
-    }
-  }, [])
-
   const handleDelete = async () => {
     const deleteResult = await deleteFileFromDb(file.id)
     if (deleteResult.success) {
@@ -50,7 +40,9 @@ export function UploadedFileRow({ file }: UploadedFileRowProps) {
       key={file.id}
       className="flex w-full justify-between border-b p-2 @container last:border-none hover:bg-card-mud/70"
     >
-      <div className="hidden items-center justify-center sm:flex">{getIcon(file.mimeType)}</div>
+      <div className="hidden items-center justify-center sm:flex">
+        <RenderFileIcon mimeType={file.mimeType} />
+      </div>
       <div className="flex flex-col items-start @sm:w-full @sm:flex-row @sm:items-center @sm:justify-evenly">
         <div className="flex items-center justify-center text-nowrap" title={file.filename}>
           {truncateFilename(file.filename)}

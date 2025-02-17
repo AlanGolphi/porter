@@ -7,10 +7,11 @@ import { calculateRequiredTTL, truncateFilename } from '@/lib/utils'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
 import { UploadedFile } from '@prisma/client'
-import { ArrowBigDown, FileIcon, QrCode, RefreshCcw, TrashIcon } from 'lucide-react'
+import { ArrowBigDown, QrCode, RefreshCcw, TrashIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CopyableFileUrl } from '../copyable-file-url'
+import RenderFileIcon from '../render-file-icon'
 import { FileItemInfo } from '../upload-section'
 import { CircleProgress } from './circle-progress'
 
@@ -266,7 +267,7 @@ export default function FileItem({
     <div className="relative flex h-auto w-full flex-col items-center rounded-lg bg-card-mud p-4 transition-all">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center justify-start gap-2">
-          <FileIcon className="h-6 w-6" />
+          <RenderFileIcon mimeType={fileItem.mimeType} />
           <p className="text-sm">{truncateFilename(fileItem.filename)}</p>
         </div>
         <div className="flex items-center justify-end">
