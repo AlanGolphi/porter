@@ -58,7 +58,7 @@
       "Actions": "操作"
     },
     "Copy": {
-      "CopyUrl": "复制链接",
+      "ClickToCopyUrl": "点击复制链接",
       "CopyQrCode": "复制二维码",
       "CopyUrlSuccess": "链接已复制到剪贴板",
       "CopyUrlFailed": "复制链接失败",

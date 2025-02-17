@@ -58,7 +58,7 @@
       "Actions": "Actions"
     },
     "Copy": {
-      "CopyUrl": "Copy URL",
+      "ClickToCopyUrl": "Click to copy",
       "CopyQrCode": "Copy QrCode",
       "CopyUrlSuccess": "Url copied to clipboard",
       "CopyUrlFailed": "Failed to copy url to clipboard",
