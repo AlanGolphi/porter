@@ -68,14 +68,14 @@ export function CopyableFileUrl({ url, fileSize, maxLength = 20 }: CopyableFileU
                 e.preventDefault()
                 clickToCopy(url)
               }}
-              className="gap-1 text-nowrap text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
+              className="flex items-center gap-1 text-nowrap text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500"
             >
+              <Copy className="h-4 w-4 text-blue-800 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-500" />
               {truncateFilename(renderUrl, maxLength)}
             </a>
           </div>
         </TooltipTrigger>
-        <TooltipContent className="flex items-center gap-1">
-          <Copy className="h-4 w-4 text-white dark:text-black" />
+        <TooltipContent>
           <p>{t('ClickToCopyUrl')}</p>
         </TooltipContent>
       </Tooltip>
