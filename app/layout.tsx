@@ -24,6 +24,27 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t('Title'),
     description: t('Description'),
+    authors: {
+      name: 'Alan Golphi',
+      url: 'https://github.com/AlanGolphi',
+    },
+    generator: 'Next.js',
+    keywords: [
+      'next.js',
+      'react',
+      'server components',
+      'app router',
+      'porter',
+      'upload',
+      'file',
+      'uploader',
+    ],
+    robots: 'index, follow',
+    referrer: 'strict-origin-when-cross-origin',
+    themeColor: '#fcfaf8',
+    creator: 'Alan Golphi',
+    publisher: 'Alan Golphi',
+    manifest: '/manifest.json',
   }
 }
 
