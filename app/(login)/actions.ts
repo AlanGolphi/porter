@@ -18,7 +18,7 @@ import React from 'react'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
-const porterUrl = process.env.NEXT_PUBLIC_PORTER_URL!
+const porterUrl = process.env.NEXT_PUBLIC_SITE_URL!
 const resend = new Resend(process.env.RESEND_PRIVATE_KEY!)
 
 const signInSchema = z.object({
