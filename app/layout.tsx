@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
 import localFont from 'next/font/local'
+import Script from 'next/script'
 import './globals.css'
 
 const geistSans = localFont({
@@ -79,6 +80,12 @@ export default async function RootLayout({
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
+
+      {/* Umami Analytics */}
+      <Script
+        src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
+        data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+      />
     </html>
   )
 }
