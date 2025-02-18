@@ -1,7 +1,7 @@
 import { Toaster } from '@/components/ui/sonner'
 import { UserProvider } from '@/lib/auth'
 import { getUser } from '@/lib/db/queries'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
@@ -18,6 +18,16 @@ const geistMono = localFont({
   variable: '--font-geist-mono',
   weight: '100 900',
 })
+
+export const viewport: Viewport = {
+  themeColor: '#fcfaf8',
+  width: 'device-width',
+  height: 'device-height',
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 2,
+  userScalable: true,
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Meta')
@@ -41,7 +51,6 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
     robots: 'index, follow',
     referrer: 'strict-origin-when-cross-origin',
-    themeColor: '#fcfaf8',
     creator: 'Alan Golphi',
     publisher: 'Alan Golphi',
     manifest: '/manifest.json',
