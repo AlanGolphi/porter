@@ -148,11 +148,9 @@ export const resendEmail = async (formData: FormData) => {
       where: { id: user.id },
       data: { verificationToken, emailSentAt: new Date() },
     })
-    return createSuccessState('Email resend successful')
-  } catch (error) {
-    return createErrorState(
-      `Email resend failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    )
+    return createSuccessState(t('EmailResent'))
+  } catch {
+    return createErrorState(t('EmailResendFailedDescription'))
   }
 }
 

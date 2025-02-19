@@ -7,7 +7,7 @@ import { calculateRequiredTTL, truncateFilename } from '@/lib/utils'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
 import { UploadedFile } from '@prisma/client'
-import { ArrowBigDown, QrCode, RefreshCcw, TrashIcon } from 'lucide-react'
+import { ArrowBigDown, LoaderCircle, QrCode, RefreshCcw, TrashIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CopyableFileUrl } from '../copyable-file-url'
@@ -186,7 +186,7 @@ export default function FileItem({
     console.log(findedFile?.filename)
     switch (status) {
       case 'init':
-        return <p>init...</p>
+        return <LoaderCircle className="h-6 w-6 animate-spin" />
       case 'hashing':
       case 'finding':
       case 'uploading':
