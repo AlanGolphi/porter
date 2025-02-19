@@ -47,6 +47,7 @@ export async function getSession() {
 
 export async function setSession(user: User) {
   'use server'
+  const secureSession = process.env.NODE_ENV !== 'development'
   const expiresInOneDay = new Date(Date.now() + 1000 * 60 * 60 * 24)
   const session: SessionData = {
     user: {
@@ -59,8 +60,7 @@ export async function setSession(user: User) {
 
   cookieStore.set('session', encryptedSession, {
     expires: expiresInOneDay,
-    // TODO: enable secure cookies
-    // secure: true,
+    secure: secureSession,
     httpOnly: true,
     sameSite: 'lax',
   })
