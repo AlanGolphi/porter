@@ -75,6 +75,7 @@
     "Verifying": "Verifying...",
     "Redirecting": "Redirecting...",
     "Verified": "Email verified, you're good to go!",
-    "InvalidToken": "Invalid token, please try again"
+    "InvalidToken": "Invalid token, please try again",
+    "VerifyFailed": "Verify failed, please try again later"
   }
 }

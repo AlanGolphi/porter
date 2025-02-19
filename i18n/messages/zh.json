@@ -75,6 +75,7 @@
     "Verifying": "验证中...",
     "Redirecting": "跳转中...",
     "Verified": "邮箱已验证，可以继续使用了！",
-    "InvalidToken": "无效的验证码，请重试"
+    "InvalidToken": "无效的验证码，请重试",
+    "VerifyFailed": "验证失败，请稍后重试"
   }
 }

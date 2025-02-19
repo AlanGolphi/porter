@@ -9,7 +9,6 @@ import {
 } from '@/lib/auth/middleware'
 import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session'
 import { db } from '@/lib/db'
-import { getUser } from '@/lib/db/queries'
 import { randomBytes } from 'crypto'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { cookies } from 'next/headers'
@@ -158,19 +157,30 @@ export const resendEmail = async (formData: FormData) => {
 }
 
 export const verifyEmail = async (token: string): Promise<ActionState> => {
-  const user = await getUser()
   const t = await getTranslations('VerifyPage')
+  const user = await db.user.findFirst({ where: { verificationToken: token } })
 
   if (!user) {
     redirect('/sign-in')
   }
 
-  if (token !== user.verificationToken) {
-    return createErrorState(t('InvalidToken'))
+  if (user.emailVerified) {
+    redirect('/')
   }
-  await db.user.update({
-    where: { id: user.id },
-    data: { emailVerified: true, verificationToken: null },
-  })
-  return createSuccessState(t('Verified'))
+
+  try {
+    await db.$transaction(async (tx) => {
+      const updatedUser = await tx.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerified: true,
+          verificationToken: null,
+        },
+      })
+      await setSession(updatedUser)
+    })
+    return createSuccessState(t('Verified'))
+  } catch {
+    return createErrorState(t('VerifyFailed'))
+  }
 }
