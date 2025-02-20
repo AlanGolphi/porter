@@ -3,15 +3,15 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/AlanGolphi/porter">
+  <a href="https://porter.wuds.run">
     <img src="https://pandora.wuds.run/images/250219-ik_93OwGIA.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Porter</h3>
 
   <p align="center">
-    Port your files to cloudflare r2. ➡️
-    <a href="https://porter.wuds.run">View Demo</a>
+    Port your files to cloudflare r2.➡️
+  <a href="https://porter.wuds.run">View Demo</a>
   </p>
 </div>
 
@@ -34,7 +34,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+email: `test@test.com`  
+password: `123123123`
 [![Product Name Screen Shot][product-screenshot0]](https://porter.wuds.run)
 [![Product Name Screen Shot][product-screenshot1]](https://porter.wuds.run)
 
