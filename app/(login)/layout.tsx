@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic'
 import GlobalNavLoading from '../components/global-nav-loading'
 
+export const danamic = 'force-static'
+
 const GlobalNav = dynamic(() => import('../components/global-nav'), {
   loading: () => <GlobalNavLoading />,
 })

@@ -25,11 +25,10 @@ export async function middleware(request: NextRequest) {
           ...parsedSessionData,
           expires: expiresInOneDay.toISOString(),
         }),
-        // TODO: enable secure cookies
-        // secure: true,
         httpOnly: true,
         sameSite: 'lax',
         expires: expiresInOneDay,
+        secure: process.env.NODE_ENV !== 'development',
       })
     } catch (error) {
       console.error('Invalid session!', error)
