@@ -48,6 +48,7 @@ Key features:
 - Robust error handling and performance optimization
 - Comprehensive TypeScript implementation
 - Email/password authentication with JWTs stored to cookies
+- Utilizes **WebWorkers** to compute file hashes, preventing duplicate uploads of identical files
 
 This project serves as both a practical learning exercise and a production-ready solution for cloud storage needs.
 
