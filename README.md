@@ -44,11 +44,12 @@ password: `123123123`
 Key features:
 - Built with Next.js 15 and TypeScript following industry best practices
 - Seamless file upload and management with Cloudflare R2 integration
-- Modern UI/UX with responsive design
+- Modern UI/UX with **responsive design**, as well as **dark mode**
 - Robust error handling and performance optimization
 - Comprehensive TypeScript implementation
 - Email/password authentication with JWTs stored to cookies
 - Utilizes **WebWorkers** to compute file hashes, preventing duplicate uploads of identical files
+- Perfect **internationalization(i18n)** support.
 
 This project serves as both a practical learning exercise and a production-ready solution for cloud storage needs.
 
