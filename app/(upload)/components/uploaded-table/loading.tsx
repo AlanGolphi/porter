@@ -5,18 +5,18 @@ export function UploadedFileRowLoading() {
   return (
     <div className="flex w-full items-center justify-between rounded-2xl bg-card-mud px-2 py-4 @container">
       <div className="hidden items-center justify-center sm:flex">
-        <Skeleton className="h-6 w-6 rounded-lg" />
+        <Skeleton className="h-6 w-10 rounded-lg" />
       </div>
-      <div className="flex flex-col items-start @sm:w-full @sm:flex-row @sm:items-center @sm:justify-evenly">
+      <div className="flex flex-col items-start gap-1 @sm:w-full @sm:flex-row @sm:items-center @sm:justify-evenly">
         <div className="flex items-center justify-center">
-          <Skeleton className="h-6 w-full" />
+          <Skeleton className="h-6 w-48" />
         </div>
         <div className="flex items-center justify-center">
-          <Skeleton className="h-6 w-full" />
+          <Skeleton className="h-6 w-48" />
         </div>
       </div>
       <div className="flex basis-1/6 items-center justify-center gap-2 text-right">
-        <Skeleton className="h-6 w-6 rounded-lg" />
+        <Skeleton className="h-8 w-8 rounded-lg" />
         <Skeleton className="h-8 w-10 rounded-lg" />
       </div>
     </div>
