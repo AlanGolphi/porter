@@ -36,8 +36,9 @@
 ## About The Project
 email: `test@test.com`  
 password: `123123123`
-[![Product Name Screen Shot][product-screenshot0]](https://porter.wuds.run)
-[![Product Name Screen Shot][product-screenshot1]](https://porter.wuds.run)
+[![Login Page][product-screenshot0]](https://porter.wuds.run)
+[![Upload Page][product-screenshot1]](https://porter.wuds.run)
+[![Chrome lighthouse score][product-screenshot2]](https://porter.wuds.run)
 
 **Porter** is a modern full-stack application built with Next.js 15. This learn-by-doing project demonstrates the implementation of a cloud storage solution using Cloudflare R2.
 
@@ -145,3 +146,4 @@ explain all the environments here
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot0]:https://pandora.wuds.run/images/250219-y-mh7aKTR0.png
 [product-screenshot1]: https://pandora.wuds.run/images/250219-_hEx9OA3XP.png
+[product-screenshot2]: https://pandora.wuds.run/images/250304-JeiJdW6WfQ.png
